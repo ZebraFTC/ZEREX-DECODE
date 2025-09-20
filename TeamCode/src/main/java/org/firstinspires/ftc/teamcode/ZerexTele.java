@@ -35,10 +35,10 @@ public class ZerexTele extends LinearOpMode {
             double drive = gamepad1.left_stick_x;
             double turn = gamepad1.left_stick_y;
 
-            FrontRight.setPower(drive - turn);
-            FrontLeft.setPower(drive + turn);
-            BackRight.setPower(drive - turn);
-            BackLeft.setPower(drive + turn);
+            FrontRight.setPower(drive + turn);
+            FrontLeft.setPower(drive - turn);
+            BackRight.setPower(drive + turn);
+            BackLeft.setPower(drive - turn);
 
             if (gamepad2.left_bumper) {
                 Intake.setPower(1);
@@ -52,6 +52,13 @@ public class ZerexTele extends LinearOpMode {
                 OutLeft.setPower(0);
                 OutRight.setPower(0);
             }
+            if (gamepad2.x) {
+                Intake.setPower(-1);
+            }
+            else {
+                Intake.setPower(0);
+            }
+            }
          }
     }
-}
+
