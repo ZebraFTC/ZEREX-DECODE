@@ -17,6 +17,7 @@ public class ZerexTele extends LinearOpMode {
     public DcMotor Intake;
     public DcMotor OutRight;
     public DcMotor OutLeft;
+    public DcMotor TransferBelt;
     public Servo Kicker;
     double speed;
 
@@ -31,23 +32,26 @@ public class ZerexTele extends LinearOpMode {
         OutRight = hardwareMap.get(DcMotor.class, "rightOut");
         OutLeft = hardwareMap.get(DcMotor.class, "leftOut");
         Kicker = hardwareMap.get(Servo.class,"kicker");
+        TransferBelt = hardwareMap.get(DcMotor.class, "belt");
 
         waitForStart();
 
         while (opModeIsActive()) {
 
-            double drive = gamepad1.left_stick_x;
-            double turn = gamepad1.left_stick_y;
+            double drive = gamepad1.left_stick_y;
+            double turn = gamepad1.right_stick_x;
 
-            FrontRight.setPower(drive + turn);
-            FrontLeft.setPower(-drive - turn);
-            BackRight.setPower(drive + turn);
-            BackLeft.setPower(-drive - turn);
+            FrontRight.setPower(-drive - turn);
+            FrontLeft.setPower(drive + turn);
+            BackRight.setPower(-drive - turn);
+            BackLeft.setPower(drive + turn);
 
             if (gamepad2.left_bumper) {
                 Intake.setPower(1);
+                TransferBelt.setPower(1);
             } else {
                 Intake.setPower(0);
+                TransferBelt.setPower(0);
             }
             if (gamepad2.right_bumper) {
                 OutRight.setPower(-speed);
@@ -58,9 +62,11 @@ public class ZerexTele extends LinearOpMode {
             }
             if (gamepad2.y) {
                 Intake.setPower(-1);
+                TransferBelt.setPower(-1);
             }
             else {
                 Intake.setPower(0);
+                TransferBelt.setPower(0);
             }
             if (gamepad2.dpad_down){
                 speed = 0.25;
@@ -71,11 +77,11 @@ public class ZerexTele extends LinearOpMode {
             else if (gamepad2.dpad_right){
                 speed = 0.75;
             }
-            else if(gamepad1.dpad_up){
+            else if(gamepad2.dpad_up){
                 speed = 1;
             }
             else {
-                speed = 0;
+                speed = 0.5;
             }
             if (gamepad2.a){
                 Kicker.setPosition(0.1);
@@ -83,6 +89,7 @@ public class ZerexTele extends LinearOpMode {
             if (gamepad2.b){
                 Kicker.setPosition(0.4);
             }
+
             }
          }
     }
