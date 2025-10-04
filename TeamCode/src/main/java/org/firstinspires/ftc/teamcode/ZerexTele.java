@@ -43,7 +43,7 @@ public class ZerexTele extends LinearOpMode {
         while (opModeIsActive()) {
 
             double drive = 0.6 * gamepad1.left_stick_y;
-            double turn = 0.6 *  gamepad1.right_stick_x;
+            double turn = -0.6 *  gamepad1.right_stick_x;
 
             FrontRight.setPower(drive - turn);
             FrontLeft.setPower(drive + turn);
@@ -84,14 +84,14 @@ public class ZerexTele extends LinearOpMode {
             else if(gamepad2.dpad_up){
                 speed = 1;
             }
-            else {
+            e lse {
                 speed = 0.4;
             }
             if (gamepad2.a){
-                Kicker.setPosition(0.1);
+                Kicker.setPosition(0.7); //up position
             }
             else {
-                Kicker.setPosition(0.4);
+                Kicker.setPosition(.95); //down position
             }
 
             }
