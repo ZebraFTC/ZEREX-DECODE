@@ -4,6 +4,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 
 @TeleOp
@@ -34,16 +35,19 @@ public class ZerexTele extends LinearOpMode {
         Kicker = hardwareMap.get(Servo.class,"kicker");
         TransferBelt = hardwareMap.get(DcMotor.class, "belt");
 
+        FrontRight.setDirection(DcMotorSimple.Direction.REVERSE);
+        BackRight.setDirection(DcMotorSimple.Direction.REVERSE);
+
         waitForStart();
 
         while (opModeIsActive()) {
 
-            double drive = gamepad1.left_stick_y;
-            double turn = gamepad1.right_stick_x;
+            double drive = 0.6 * gamepad1.left_stick_y;
+            double turn = 0.6 *  gamepad1.right_stick_x;
 
-            FrontRight.setPower(-drive - turn);
+            FrontRight.setPower(drive - turn);
             FrontLeft.setPower(drive + turn);
-            BackRight.setPower(-drive - turn);
+            BackRight.setPower(drive - turn);
             BackLeft.setPower(drive + turn);
 
             if (gamepad2.left_bumper) {
@@ -81,12 +85,12 @@ public class ZerexTele extends LinearOpMode {
                 speed = 1;
             }
             else {
-                speed = 0.5;
+                speed = 0.4;
             }
             if (gamepad2.a){
                 Kicker.setPosition(0.1);
             }
-            if (gamepad2.b){
+            else {
                 Kicker.setPosition(0.4);
             }
 
