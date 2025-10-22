@@ -44,11 +44,12 @@ public class ZerexTele extends LinearOpMode {
 
             double drive = 0.6 * gamepad1.left_stick_y;
             double turn = 0.6 *  gamepad1.right_stick_x;
+            double strafe = 0.6 * gamepad1.left_stick_x;
 
-            FrontRight.setPower(drive - turn);
-            FrontLeft.setPower(drive + turn);
-            BackRight.setPower(drive - turn);
-            BackLeft.setPower(drive + turn);
+            FrontRight.setPower(drive - turn + strafe);
+            FrontLeft.setPower(drive + turn - strafe);
+            BackRight.setPower(drive - turn - strafe);
+            BackLeft.setPower(drive + turn + strafe);
 
             if (gamepad2.left_bumper) {
                 Intake.setPower(1);
