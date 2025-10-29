@@ -51,7 +51,7 @@ public class ZerexTele2 extends LinearOpMode {
             FrontLeft.setPower(drive + turn - strafe);
             BackRight.setPower(drive - turn - strafe);
             BackLeft.setPower(drive + turn + strafe);
-
+ //hihihihihihi
             //intake
             if (gamepad2.left_bumper) {
                 Intake.setPower(1);
