@@ -15,15 +15,14 @@ public class ZerexRedNearAuto extends LinearOpMode {
     public DcMotor BackRight;
     public DcMotor BackLeft;
     public DcMotor Intake;
-    public DcMotor OutRight;
-    public DcMotor OutLeft;
+    public DcMotor Shooter;
     public DcMotor TransferBelt;
 
     public void forward(long duration) {
-        FrontRight.setPower(-.5);
-        FrontLeft.setPower(-.5);
-        BackRight.setPower(-.5);
-        BackLeft.setPower(-.5);
+        FrontRight.setPower(-0.5);
+        FrontLeft.setPower(-0.5);
+        BackRight.setPower(-0.5);
+        BackLeft.setPower(-0.5);
         sleep(duration);
         FrontRight.setPower(0);
         FrontLeft.setPower(0);
@@ -32,10 +31,10 @@ public class ZerexRedNearAuto extends LinearOpMode {
     }
 
     public void backwards(long duration) {
-        FrontRight.setPower(.5);
-        FrontLeft.setPower(.5);
-        BackRight.setPower(.5);
-        BackLeft.setPower(.5);
+        FrontRight.setPower(0.5);
+        FrontLeft.setPower(0.5);
+        BackRight.setPower(0.5);
+        BackLeft.setPower(0.5);
         sleep(duration);
         FrontRight.setPower(0);
         FrontLeft.setPower(0);
@@ -44,10 +43,10 @@ public class ZerexRedNearAuto extends LinearOpMode {
     }
 
     public void left(long duration) {
-        FrontRight.setPower(-.5);
-        FrontLeft.setPower(.5);
-        BackRight.setPower(-.5);
-        BackLeft.setPower(.5);
+        FrontRight.setPower(-0.5);
+        FrontLeft.setPower(0.5);
+        BackRight.setPower(-0.5);
+        BackLeft.setPower(0.5);
         sleep(duration);
         FrontRight.setPower(0);
         FrontLeft.setPower(0);
@@ -56,10 +55,10 @@ public class ZerexRedNearAuto extends LinearOpMode {
     }
 
     public void right(long duration) {
-        FrontRight.setPower(.5);
-        FrontLeft.setPower(-.5);
-        BackRight.setPower(.5);
-        BackLeft.setPower(-.5);
+        FrontRight.setPower(0.5);
+        FrontLeft.setPower(-0.5);
+        BackRight.setPower(0.5);
+        BackLeft.setPower(-0.5);
         sleep(duration);
         FrontRight.setPower(0);
         FrontLeft.setPower(0);
@@ -77,23 +76,26 @@ public class ZerexRedNearAuto extends LinearOpMode {
         BackRight = hardwareMap.get(DcMotor.class, "backRight");
         BackLeft = hardwareMap.get(DcMotor.class, "backLeft");
         Intake = hardwareMap.get(DcMotor.class, "intake");
-        //OutRight = hardwareMap.get(DcMotor.class, "shooterRight");
-        //OutLeft  = hardwareMap.get(DcMotor.class, "shooterLeft");
+        Shooter = hardwareMap.get(DcMotor.class, "shooter");
+
 
         FrontRight.setDirection(DcMotorSimple.Direction.REVERSE);
         BackRight.setDirection(DcMotorSimple.Direction.REVERSE);
 
         waitForStart();
 
-        forward(625);
-        left(450);
-        Intake.setPower(1);
-        forward(1000);
+        forward(2222);
+        Shooter.setPower(-0.75);
+        right(200);
+        Intake.setPower(1.0);
+        TransferBelt.setPower(1.0);
+        sleep(5000);
         Intake.setPower(0);
-        backwards(1000);
-        right(450);
-        forward(1200);
+        TransferBelt.setPower(0);
+        Shooter.setPower(0);
         left(200);
-        //shoot
+        backwards(800);
+        right(450);
+        forward(500);
     }
 }

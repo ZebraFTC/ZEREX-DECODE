@@ -20,7 +20,7 @@ public class ZerexTele2 extends LinearOpMode {
 
     double shootSpeed;
     double driveSpeed;
-
+int RBispressed;
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -37,7 +37,7 @@ public class ZerexTele2 extends LinearOpMode {
         FrontRight.setDirection(DcMotorSimple.Direction.REVERSE);
         BackRight.setDirection(DcMotorSimple.Direction.REVERSE);
         TransferBelt.setDirection(DcMotorSimple.Direction.REVERSE);
-
+        Shooter.setDirection(DcMotorSimple.Direction.REVERSE);
 
         waitForStart();
 
@@ -61,12 +61,11 @@ public class ZerexTele2 extends LinearOpMode {
             }
 
             //shooter
-            if (gamepad2.right_bumper) {
-                Shooter.setPower(shootSpeed);
+            if (gamepad2.rightBumperWasPressed()) {
+                RBispressed = 1 - RBispressed;
             }
-            else {
-                Shooter.setPower(0);
-            }
+
+            Shooter.setPower(RBispressed * shootSpeed);
 
             //reverse intake
             if (gamepad2.y) {
