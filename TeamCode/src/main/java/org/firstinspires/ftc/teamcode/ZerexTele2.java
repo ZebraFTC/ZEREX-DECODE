@@ -20,7 +20,7 @@ public class ZerexTele2 extends LinearOpMode {
 
     double shootSpeed;
     double driveSpeed;
-int RBispressed;
+    int RBispressed;
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -90,11 +90,11 @@ int RBispressed;
             }
             //100% speed
             else if (gamepad2.dpad_up) {
-                shootSpeed = 1;
+                shootSpeed = 1.0;
             }
-            //50% speed
+            //100% speed
             else {
-                shootSpeed = 0.5;
+                shootSpeed = 1.0;
             }
 
 

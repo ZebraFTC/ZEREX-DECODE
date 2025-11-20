@@ -16,7 +16,41 @@ public class ZerexBlueNearAuto extends LinearOpMode {
     public DcMotor BackLeft;
     public DcMotor Intake;
     public DcMotor Shooter;
-    public DcMotor TransferBelt;
+    public DcMotor Transfer;
+
+
+
+
+    @Override
+    public void runOpMode() throws InterruptedException {
+
+        FrontRight = hardwareMap.get(DcMotor.class, "frontRight");
+        FrontLeft = hardwareMap.get(DcMotor.class, "frontLeft");
+        BackRight = hardwareMap.get(DcMotor.class, "backRight");
+        BackLeft = hardwareMap.get(DcMotor.class, "backLeft");
+        Intake = hardwareMap.get(DcMotor.class, "intake");
+        Shooter = hardwareMap.get(DcMotor.class, "shooter");
+        Transfer = hardwareMap.get(DcMotor.class, "belt");
+
+        FrontRight.setDirection(DcMotorSimple.Direction.REVERSE);
+        BackRight.setDirection(DcMotorSimple.Direction.REVERSE);
+
+        waitForStart();
+
+        forward(2222);
+        Shooter.setPower(-1.0);
+        left(200);
+        Intake.setPower(1);
+        Transfer.setPower(1);
+        sleep(500);
+        Intake.setPower(0);
+        Transfer .setPower(0);
+        Shooter.setPower(0);
+        right(200);
+        backwards(800);
+        left(450);
+        forward(500);
+    }
 
     public void forward(long duration) {
         FrontRight.setPower(-.5);
@@ -64,37 +98,5 @@ public class ZerexBlueNearAuto extends LinearOpMode {
         FrontLeft.setPower(0);
         BackRight.setPower(0);
         BackLeft.setPower(0);
-    }
-
-
-    @Override
-    public void runOpMode() throws InterruptedException {
-
-        FrontRight = hardwareMap.get(DcMotor.class, "frontRight");
-        FrontLeft = hardwareMap.get(DcMotor.class, "frontLeft");
-        BackRight = hardwareMap.get(DcMotor.class, "backRight");
-        BackLeft = hardwareMap.get(DcMotor.class, "backLeft");
-        Intake = hardwareMap.get(DcMotor.class, "intake");
-        Shooter = hardwareMap.get(DcMotor.class, "shooter");
-        TransferBelt = hardwareMap.get(DcMotor.class, "belt");
-
-        FrontRight.setDirection(DcMotorSimple.Direction.REVERSE);
-        BackRight.setDirection(DcMotorSimple.Direction.REVERSE);
-
-        waitForStart();
-
-        forward(2222);
-        Shooter.setPower(-0.75);
-        left(200);
-        Intake.setPower(1);
-        TransferBelt.setPower(1);
-        sleep(500);
-        Intake.setPower(0);
-        TransferBelt.setPower(0);
-        Shooter.setPower(0);
-        right(200);
-        backwards(800);
-        left(450);
-        forward(500);
     }
 }
