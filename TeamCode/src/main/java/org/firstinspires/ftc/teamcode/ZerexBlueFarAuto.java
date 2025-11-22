@@ -38,10 +38,11 @@ public class ZerexBlueFarAuto extends LinearOpMode {
         waitForStart();
 
         backwards(888);
-        Intake.setPower(1.0);
-        Transfer.setPower(1.0);
         Shooter.setPower(-1.0);
-        sleep(5000);
+        sleep(2000);
+        Intake.setPower(1.0);
+        Transfer.setPower(-1.0);
+        sleep(6000);
         Intake.setPower(0);
         Transfer.setPower(0);
         Shooter.setPower(0);

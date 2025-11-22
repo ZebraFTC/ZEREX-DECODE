@@ -38,10 +38,11 @@ public class ZerexRedFarAuto extends LinearOpMode {
         waitForStart();
 
         backwards(888);
-        Intake.setPower(1.0);
-        Transfer.setPower(1.0);
         Shooter.setPower(-1.0);
-        sleep(5000);
+        sleep(2000);
+        Intake.setPower(1.0);
+        Transfer.setPower(-1.0);
+        sleep(6000);
         Intake.setPower(0);
         Transfer.setPower(0);
         Shooter.setPower(0);
@@ -93,5 +94,13 @@ public class ZerexRedFarAuto extends LinearOpMode {
         FrontLeft.setPower(0);
         BackRight.setPower(0);
         BackLeft.setPower(0);
+    }
+
+    public void rightStrafe(long duration) {
+        FrontRight.setPower(-.5);
+        FrontLeft.setPower(.5);
+        BackRight.setPower(.5);
+        BackLeft.setPower(-.5);
+
     }
 }
