@@ -16,7 +16,7 @@ public class ZerexTele2 extends LinearOpMode {
     public DcMotor BackLeft;
     public DcMotor Intake;
     public DcMotor Shooter;
-    public DcMotor TransferBelt;
+    public DcMotor Transfer;
 
     double shootSpeed;
     double driveSpeed;
@@ -31,12 +31,12 @@ public class ZerexTele2 extends LinearOpMode {
         BackLeft = hardwareMap.get(DcMotor.class, "backLeft");
         Intake = hardwareMap.get(DcMotor.class, "intake");
         Shooter = hardwareMap.get(DcMotor.class, "shooter");
-        TransferBelt = hardwareMap.get(DcMotor.class, "belt");
+        Transfer = hardwareMap.get(DcMotor.class, "belt");
 
         //reverse wheel directions on the right
         FrontRight.setDirection(DcMotorSimple.Direction.REVERSE);
         BackRight.setDirection(DcMotorSimple.Direction.REVERSE);
-        TransferBelt.setDirection(DcMotorSimple.Direction.REVERSE);
+        Transfer.setDirection(DcMotorSimple.Direction.REVERSE);
         Shooter.setDirection(DcMotorSimple.Direction.REVERSE);
 
         waitForStart();
@@ -53,11 +53,16 @@ public class ZerexTele2 extends LinearOpMode {
 
             //intake
             if (gamepad2.left_bumper) {
+                Transfer.setPower(1);
+            } else {
+                Transfer.setPower(0);
+            }
+
+            //transfer
+            if (gamepad2.left_trigger > 0) {
                 Intake.setPower(1);
-                TransferBelt.setPower(1);
             } else {
                 Intake.setPower(0);
-                TransferBelt.setPower(0);
             }
 
             //shooter
@@ -70,10 +75,10 @@ public class ZerexTele2 extends LinearOpMode {
             //reverse intake
             if (gamepad2.y) {
                 Intake.setPower(-1);
-                TransferBelt.setPower(-1);
+                Transfer.setPower(-1);
             } else {
                 Intake.setPower(0);
-                TransferBelt.setPower(0);
+                Transfer.setPower(0);
             }
 
             //25% speed

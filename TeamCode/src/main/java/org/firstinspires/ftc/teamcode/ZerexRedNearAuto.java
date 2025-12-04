@@ -37,11 +37,12 @@ public class ZerexRedNearAuto extends LinearOpMode {
 
         FrontRight.setDirection(DcMotorSimple.Direction.REVERSE);
         BackRight.setDirection(DcMotorSimple.Direction.REVERSE);
+        Transfer.setDirection(DcMotorSimple.Direction.REVERSE);
 
         waitForStart();
 
         forward(2222);
-        Shooter.setPower(-1.0);
+        Shooter.setPower(-0.88);
         right(200);
         Intake.setPower(1.0);
         Transfer.setPower(1.0);
