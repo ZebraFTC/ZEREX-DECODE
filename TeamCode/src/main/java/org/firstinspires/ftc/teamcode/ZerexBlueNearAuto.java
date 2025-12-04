@@ -38,19 +38,12 @@ public class ZerexBlueNearAuto extends LinearOpMode {
 
         waitForStart();
 
-        forward(2222);
-        Shooter.setPower(-0.88);
-        left(200);
-        Intake.setPower(1);
+        Shooter.setPower(1.0);
+        sleep(2000);
         Transfer.setPower(1);
-        sleep(500);
-        Intake.setPower(0);
-        Transfer .setPower(0);
-        Shooter.setPower(0);
-        right(200);
-        backwards(800);
-        left(450);
-        forward(500);
+        Intake.setPower(1);
+        sleep(5000);
+        turnOff();
     }
 
     public void forward(long duration) {
@@ -99,5 +92,11 @@ public class ZerexBlueNearAuto extends LinearOpMode {
         FrontLeft.setPower(0);
         BackRight.setPower(0);
         BackLeft.setPower(0);
+    }
+
+    public void turnOff(){
+        Intake.setPower(0);
+        Transfer.setPower(0);
+        Shooter.setPower(0);
     }
 }

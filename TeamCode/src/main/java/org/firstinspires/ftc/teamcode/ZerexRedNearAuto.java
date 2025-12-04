@@ -41,19 +41,15 @@ public class ZerexRedNearAuto extends LinearOpMode {
 
         waitForStart();
 
-        forward(2222);
-        Shooter.setPower(-0.88);
-        right(200);
-        Intake.setPower(1.0);
-        Transfer.setPower(1.0);
+        Shooter.setPower(1.0);
+        sleep(2000);
+        Transfer.setPower(1);
+        Intake.setPower(1);
         sleep(5000);
-        Intake.setPower(0);
-        Transfer.setPower(0);
-        Shooter.setPower(0);
-        left(200);
-        backwards(800);
-        right(450);
-        forward(500);
+        turnOff();
+
+
+
     }
 
     public void forward(long duration) {
@@ -102,5 +98,11 @@ public class ZerexRedNearAuto extends LinearOpMode {
         FrontLeft.setPower(0);
         BackRight.setPower(0);
         BackLeft.setPower(0);
+    }
+
+    public void turnOff(){
+        Intake.setPower(0);
+        Transfer.setPower(0);
+        Shooter.setPower(0);
     }
 }
