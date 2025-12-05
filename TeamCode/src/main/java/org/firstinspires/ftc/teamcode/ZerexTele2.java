@@ -99,7 +99,7 @@ public class ZerexTele2 extends LinearOpMode {
             }
             //100% speed
             else {
-                shootSpeed = 0.888;
+                shootSpeed = 0.8;
             }
 
 

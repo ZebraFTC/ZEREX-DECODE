@@ -38,19 +38,30 @@ public class ZerexRedFarAuto extends LinearOpMode {
 
         waitForStart();
 
-        Shooter.setPower(-0.88);
-        sleep(2000);
-        Intake.setPower(1.0);
-        Transfer.setPower(1.0);
-        sleep(5000);
+        backwards(750);
+        shoot(-.777, 3000);
+        backwards(222);
+        right(222);
+        Intake.setPower(1);
+        Transfer.setPower(1);
+        sleep(1500);
+        forward(1111,.5);
+        forward(1000,.125);
         turnOff();
+        backwards(900);
+        Transfer.setPower(-1);
+        sleep(1000);
+        turnOff();
+        left(133);
+        shoot(-.777,3000);
+
     }
 
-    public void forward(long duration) {
-        FrontRight.setPower(-.5);
-        FrontLeft.setPower(-.5);
-        BackRight.setPower(-.5);
-        BackLeft.setPower(-.5);
+    public void forward(long duration, double speed) {
+        FrontRight.setPower(-speed);
+        FrontLeft.setPower(-speed);
+        BackRight.setPower(-speed);
+        BackLeft.setPower(-speed);
         sleep(duration);
         FrontRight.setPower(0);
         FrontLeft.setPower(0);
@@ -92,6 +103,27 @@ public class ZerexRedFarAuto extends LinearOpMode {
         FrontLeft.setPower(0);
         BackRight.setPower(0);
         BackLeft.setPower(0);
+    }
+
+    public void leftStrafe(long duration){
+        FrontRight.setPower(.5);
+        FrontLeft.setPower(-.5);
+        BackRight.setPower(-.5);
+        BackLeft.setPower(.5);
+        sleep(duration);
+        FrontRight.setPower(0);
+        FrontLeft.setPower(0);
+        BackRight.setPower(0);
+        BackLeft.setPower(0);
+    }
+
+    public void shoot(double power, long time){
+        Shooter.setPower(power);
+        sleep(2000);
+        Intake.setPower(1.0);
+        Transfer.setPower(1.0);
+        sleep(time);
+        turnOff();
     }
 
     public void turnOff(){

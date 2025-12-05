@@ -41,14 +41,12 @@ public class ZerexRedNearAuto extends LinearOpMode {
 
         waitForStart();
 
-        Shooter.setPower(1.0);
+        Shooter.setPower(-1.0);
         sleep(2000);
         Transfer.setPower(1);
         Intake.setPower(1);
-        sleep(5000);
+        sleep(7500);
         turnOff();
-
-
 
     }
 

@@ -37,8 +37,8 @@ public class ZerexBlueFarAuto extends LinearOpMode {
         Transfer.setDirection(DcMotorSimple.Direction.REVERSE);
 
         waitForStart();
-        backwards(888);
-        Shooter.setPower(-0.88);
+        backwards(800);
+        Shooter.setPower(-0.777);
         sleep(2000);
         Intake.setPower(1.0);
         Transfer.setPower(1.0);
