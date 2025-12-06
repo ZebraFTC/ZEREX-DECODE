@@ -8,7 +8,7 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 @Autonomous
 
 
-public class ZerexRedFarAuto extends LinearOpMode {
+public class ZerexRedFarAuto extends LinearOpMode  {
 
     public DcMotor FrontRight;
     public DcMotor FrontLeft;
