@@ -39,7 +39,7 @@ public class ZerexRedFarAuto extends LinearOpMode  {
         waitForStart();
 
         backwards(750);
-        shoot(-.777, 3000);
+        shoot( 0.777, 3000);
         backwards(222);
         right(222);
         sleep(3000);
