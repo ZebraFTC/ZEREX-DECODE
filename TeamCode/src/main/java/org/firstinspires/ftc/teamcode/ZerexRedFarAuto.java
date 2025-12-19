@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode;
 
+import android.content.SharedPreferences;
+
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -39,19 +41,25 @@ public class ZerexRedFarAuto extends LinearOpMode  {
         waitForStart();
 
         backwards(750);
-        shoot( 0.777, 3000);
+        shoot(0.777, 3000);
         backwards(222);
         right(222);
-        sleep(3000);
+        sleep(6000);
+        Shooter.setPower(-1);
+        sleep(111);
+        turnOff();
         Intake.setPower(1);
         Transfer.setPower(1);
 
         forward(1111,.5);
+        Transfer.setPower(0);
         forward(1000,.125);
         turnOff();
-        backwards(900);
+        backwards(850);
+        Shooter.setPower(-1);
         Transfer.setPower(-1);
-        sleep(1000);
+        Intake.setPower(1);
+        sleep(1750);
         turnOff();
         left(133);
         shoot(-.777,3000);

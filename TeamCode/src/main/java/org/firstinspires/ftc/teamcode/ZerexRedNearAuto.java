@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode;
 
+
+
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -41,12 +43,12 @@ public class ZerexRedNearAuto extends LinearOpMode {
 
         waitForStart();
 
-        forward(333, .5);
-        right(68);
+        forward(315, .5);// 33
+        right(35);
         shoot(1.0, 5000);
-        shoot(-1.0, 500);
-        forward(111, .5);
-        right(180);
+        shoot(-1.0, 222);
+        forward(122, .5);
+        right(222);
         sleep(5000);
         Intake.setPower(1.0);
         Transfer.setPower(1.0);
@@ -58,14 +60,15 @@ public class ZerexRedNearAuto extends LinearOpMode {
         Transfer.setPower(1.0);
         sleep(100);
         Transfer.setPower(0);
-        backwards(1222);
+        backwards(850);
+        Shooter.setPower(-1);
         Transfer.setPower(-1);
         sleep(70);
         turnOff();
         Intake.setPower(1.0);
         sleep(500);
         turnOff();
-        left(200);
+        left(150);
         shoot(1.0, 5000);
 
     }
