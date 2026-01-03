@@ -91,7 +91,7 @@ public class ZerexTele2 extends LinearOpMode {
             }
             //75% speed
             else if (gamepad2.dpad_right) {
-                shootSpeed = 0.75;
+                shootSpeed = 0.45 ;
             }
             //100% speed
             else if (gamepad2.dpad_up) {
@@ -99,7 +99,7 @@ public class ZerexTele2 extends LinearOpMode {
             }
             //100% speed
             else {
-                shootSpeed = 0.67;//shut up
+                shootSpeed = 0.57;
             }
 
 
