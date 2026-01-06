@@ -1,6 +1,6 @@
 package org.firstinspires.ftc.teamcode;
 
-import android.content.SharedPreferences;
+
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
@@ -10,7 +10,7 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 @Autonomous
 
 
-public class ZerexBlueFarAuto extends LinearOpMode  {
+public class taxi extends LinearOpMode {
 
     public DcMotor FrontRight;
     public DcMotor FrontLeft;
@@ -19,7 +19,8 @@ public class ZerexBlueFarAuto extends LinearOpMode  {
     public DcMotor Intake;
     public DcMotor Shooter;
     public DcMotor Transfer;
-    public DcMotor Kicker;
+
+
 
 
 
@@ -34,7 +35,7 @@ public class ZerexBlueFarAuto extends LinearOpMode  {
         Intake = hardwareMap.get(DcMotor.class, "intake");
         Shooter = hardwareMap.get(DcMotor.class, "shooter");
         Transfer = hardwareMap.get(DcMotor.class, "belt");
-        Kicker = hardwareMap.get(DcMotor.class, "kicker");
+
 
         FrontRight.setDirection(DcMotorSimple.Direction.REVERSE);
         BackRight.setDirection(DcMotorSimple.Direction.REVERSE);
@@ -42,34 +43,15 @@ public class ZerexBlueFarAuto extends LinearOpMode  {
 
         waitForStart();
 
-        backwards(750);
-        shoot(1.0, 3000);
-        backwards(222);
-        left(222);
-        sleep(6000);
-        sleep(111);
-        turnOff();
-        Intake.setPower(1);
-        Transfer.setPower(1);
-
-        forward(1111,.5);
-        Transfer.setPower(0);
-        forward(1000,.125);
-        turnOff();
-        backwards(850);
-        Intake.setPower(1);
-        sleep(1750);
-        turnOff();
-        right(133);
-        shoot(1.0,5000);
+        forward(666, .5);// taxi
 
     }
 
-    public void forward(long duration, double speed) {
-        FrontRight.setPower(-speed);
-        FrontLeft.setPower(-speed);
-        BackRight.setPower(-speed);
-        BackLeft.setPower(-speed);
+    public void forward(long duration, double power) {
+        FrontRight.setPower(-power);
+        FrontLeft.setPower(-power);
+        BackRight.setPower(-power);
+        BackLeft.setPower(-power);
         sleep(duration);
         FrontRight.setPower(0);
         FrontLeft.setPower(0);
@@ -78,10 +60,10 @@ public class ZerexBlueFarAuto extends LinearOpMode  {
     }
 
     public void backwards(long duration) {
-        FrontRight.setPower(.5);
-        FrontLeft.setPower(.5);
-        BackRight.setPower(.5);
-        BackLeft.setPower(.5);
+        FrontRight.setPower(0.5);
+        FrontLeft.setPower(0.5);
+        BackRight.setPower(0.5);
+        BackLeft.setPower(0.5);
         sleep(duration);
         FrontRight.setPower(0);
         FrontLeft.setPower(0);
@@ -90,10 +72,10 @@ public class ZerexBlueFarAuto extends LinearOpMode  {
     }
 
     public void left(long duration) {
-        FrontRight.setPower(-.5);
-        FrontLeft.setPower(.5);
-        BackRight.setPower(-.5);
-        BackLeft.setPower(.5);
+        FrontRight.setPower(-0.5);
+        FrontLeft.setPower(0.5);
+        BackRight.setPower(-0.5);
+        BackLeft.setPower(0.5);
         sleep(duration);
         FrontRight.setPower(0);
         FrontLeft.setPower(0);
@@ -102,22 +84,10 @@ public class ZerexBlueFarAuto extends LinearOpMode  {
     }
 
     public void right(long duration) {
-        FrontRight.setPower(.5);
-        FrontLeft.setPower(-.5);
-        BackRight.setPower(.5);
-        BackLeft.setPower(-.5);
-        sleep(duration);
-        FrontRight.setPower(0);
-        FrontLeft.setPower(0);
-        BackRight.setPower(0);
-        BackLeft.setPower(0);
-    }
-
-    public void leftStrafe(long duration){
-        FrontRight.setPower(.5);
-        FrontLeft.setPower(-.5);
-        BackRight.setPower(-.5);
-        BackLeft.setPower(.5);
+        FrontRight.setPower(0.5);
+        FrontLeft.setPower(-0.5);
+        BackRight.setPower(0.5);
+        BackLeft.setPower(-0.5);
         sleep(duration);
         FrontRight.setPower(0);
         FrontLeft.setPower(0);
@@ -127,10 +97,9 @@ public class ZerexBlueFarAuto extends LinearOpMode  {
 
     public void shoot(double power, long time){
         Shooter.setPower(-power);
-        sleep(3000);
+        sleep(2500);
         Intake.setPower(1.0);
         Transfer.setPower(1.0);
-        Kicker.setPower(1.0);
         sleep(time);
         turnOff();
     }
@@ -139,6 +108,5 @@ public class ZerexBlueFarAuto extends LinearOpMode  {
         Intake.setPower(0);
         Transfer.setPower(0);
         Shooter.setPower(0);
-        Kicker.setPower(0);
     }
 }

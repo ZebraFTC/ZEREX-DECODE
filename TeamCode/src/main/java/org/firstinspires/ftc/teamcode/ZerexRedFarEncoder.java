@@ -6,7 +6,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 @Autonomous
 
-public class ZerexRedFarEncoder extends LinearOpMode {
+public class  ZerexRedFarEncoder extends LinearOpMode {
 
     //
     public DcMotor FrontRight;
@@ -16,10 +16,13 @@ public class ZerexRedFarEncoder extends LinearOpMode {
     public DcMotor Intake;
     public DcMotor Shooter;
     public DcMotor Transfer;
+    public DcMotor Kicker;
     private int FrontRightPosition;
     private int FrontLeftPosition;
     private int BackRightPosition;
     private int BackLeftPosition;
+
+
 
     @Override
     public void runOpMode() throws InterruptedException{
@@ -31,6 +34,7 @@ public class ZerexRedFarEncoder extends LinearOpMode {
         Intake = hardwareMap.get(DcMotor.class, "intake");
         Shooter = hardwareMap.get(DcMotor.class, "shooter");
         Transfer = hardwareMap.get(DcMotor.class, "belt");
+        Kicker = hardwareMap.get(DcMotor.class,"kicker");
 
         FrontRight.setDirection(DcMotorSimple.Direction.REVERSE);
         BackRight.setDirection(DcMotorSimple.Direction.REVERSE);
@@ -50,9 +54,9 @@ public class ZerexRedFarEncoder extends LinearOpMode {
 
         waitForStart();
 // 30 ticks ~ an inch
-        drive(360,360,360,360,0.5);
-        shoot(0.7,3000);
-        drive(-200,200,-200,200,0.5);
+        drive(600,600,600,600,0.5);
+        shoot(1.0,3000);
+        drive(450,-450,450,-450,0.5);
 
     }
 
@@ -62,15 +66,17 @@ public class ZerexRedFarEncoder extends LinearOpMode {
         BackRightPosition += BackRightTarget;
         BackLeftPosition += BackLeftTarget;
 
+        FrontRight.setTargetPosition(FrontRightPosition);
+        FrontLeft.setTargetPosition(FrontLeftPosition);
+        BackRight.setTargetPosition(BackRightPosition);
+        BackLeft.setTargetPosition(BackLeftPosition);
+
         FrontRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         FrontLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         BackRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         BackLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
-        FrontRight.setTargetPosition(FrontRightPosition);
-        FrontLeft.setTargetPosition(FrontLeftPosition);
-        BackRight.setTargetPosition(BackRightPosition);
-        BackLeft.setTargetPosition(BackLeftPosition);
+
 
         FrontRight.setPower(speed);
         FrontLeft.setPower(speed);
@@ -93,10 +99,12 @@ public class ZerexRedFarEncoder extends LinearOpMode {
         sleep(2500);
         Intake.setPower(1.0);
         Transfer.setPower(1.0);
+        Kicker.setPower(1.0);
         sleep(time);
         Shooter.setPower(0);
         Intake.setPower(0);
         Transfer.setPower(0);
+        Kicker.setPower(0);
     }
 
 }
