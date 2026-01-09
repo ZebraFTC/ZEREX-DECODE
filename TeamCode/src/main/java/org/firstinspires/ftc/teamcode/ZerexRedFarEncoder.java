@@ -54,10 +54,19 @@ public class  ZerexRedFarEncoder extends LinearOpMode {
 
         waitForStart();
 // 30 ticks ~ an inch
-        drive(600,600,600,600,0.5);
+        drive(1111,1111,1111,1111,0.5);
         shoot(1.0,3000);
-        drive(450,-450,450,-450,0.5);
-
+        drive(225,-225,225,-225,0.5);
+        drive(600, -600,-600,600,.5);
+        Intake.setPower(1.0);
+        Transfer.setPower(1.0);
+        drive(-1111,-1111,-1111,-1111,0.5);
+        Intake.setPower(0);
+        Transfer.setPower(0);
+        drive(1111,1111,1111,1111,0.5);
+        drive(-600,600,600,-600,0.5);
+        drive(-300,300,-300,300,0.5);
+        shoot(1.0,3000);
     }
 
     public void drive(int FrontRightTarget, int FrontLeftTarget, int BackRightTarget, int BackLeftTarget, double speed){
@@ -99,7 +108,7 @@ public class  ZerexRedFarEncoder extends LinearOpMode {
         sleep(2500);
         Intake.setPower(1.0);
         Transfer.setPower(1.0);
-        Kicker.setPower(1.0);
+        Kicker.setPower(-1.0);
         sleep(time);
         Shooter.setPower(0);
         Intake.setPower(0);
