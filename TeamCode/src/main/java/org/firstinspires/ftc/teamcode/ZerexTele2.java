@@ -4,7 +4,6 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
-import com.qualcomm.robotcore.hardware.Servo;
 
 @TeleOp
 
@@ -15,8 +14,8 @@ public class ZerexTele2 extends LinearOpMode {
     public DcMotor BackRight;
     public DcMotor BackLeft;
     public DcMotor Intake;
-    public DcMotor Shooter;
-    public DcMotor Transfer;
+    public DcMotor RightShooter;
+    public DcMotor LeftShooter;
     public DcMotor Kicker;
     double shootSpeed;
     double driveSpeed;
@@ -30,15 +29,14 @@ public class ZerexTele2 extends LinearOpMode {
         BackRight = hardwareMap.get(DcMotor.class, "backRight");
         BackLeft = hardwareMap.get(DcMotor.class, "backLeft");
         Intake = hardwareMap.get(DcMotor.class, "intake");
-        Shooter = hardwareMap.get(DcMotor.class, "shooter");
-        Transfer = hardwareMap.get(DcMotor.class, "belt");
+        RightShooter = hardwareMap.get(DcMotor.class, "rightShooter");
+        LeftShooter = hardwareMap.get(DcMotor.class,"leftShooter");
         Kicker = hardwareMap.get(DcMotor.class,"kicker");
 
         //reverse wheel directions on the right
         FrontRight.setDirection(DcMotorSimple.Direction.REVERSE);
         BackRight.setDirection(DcMotorSimple.Direction.REVERSE);
-        Transfer.setDirection(DcMotorSimple.Direction.REVERSE);
-        Shooter.setDirection(DcMotorSimple.Direction.REVERSE);
+        RightShooter.setDirection(DcMotorSimple.Direction.REVERSE);
 
         waitForStart();
 
@@ -52,12 +50,6 @@ public class ZerexTele2 extends LinearOpMode {
             BackRight.setPower(drive - turn - strafe);
             BackLeft.setPower(drive + turn + strafe);
 
-            //intake
-            if (gamepad2.left_bumper) {
-                Transfer.setPower(1);
-            } else {
-                Transfer.setPower(0);
-            }
 
             //transfer
             if (gamepad2.left_trigger > 0) {
@@ -67,11 +59,13 @@ public class ZerexTele2 extends LinearOpMode {
             }
 
             //shooter
-            if (gamepad2.rightBumperWasPressed()) {
+            if (gamepad2.rightBumperWasPressed()) { 
                 RBispressed = 1 - RBispressed;
             }
 
-            Shooter.setPower(RBispressed * shootSpeed);
+            RightShooter.setPower(RBispressed * shootSpeed);
+            LeftShooter.setPower(RBispressed * shootSpeed);
+
 
             //kicker
             if(gamepad2.right_trigger > 0){
@@ -83,10 +77,8 @@ public class ZerexTele2 extends LinearOpMode {
             //reverse intake
             if (gamepad2.y) {
                 Intake.setPower(-1);
-                Transfer.setPower(-1);
             } else {
                 Intake.setPower(0);
-                Transfer.setPower(0);
             }
 
             //25% speed

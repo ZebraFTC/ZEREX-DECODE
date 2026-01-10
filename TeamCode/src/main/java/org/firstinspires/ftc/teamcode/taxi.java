@@ -43,7 +43,7 @@ public class taxi extends LinearOpMode {
 
         waitForStart();
 
-        forward(666, .5);// taxi
+        forward(500, .5);// taxi
 
     }
 

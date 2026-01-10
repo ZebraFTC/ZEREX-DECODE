@@ -14,8 +14,8 @@ public class  ZerexRedFarEncoder extends LinearOpMode {
     public DcMotor BackRight;
     public DcMotor BackLeft;
     public DcMotor Intake;
-    public DcMotor Shooter;
-    public DcMotor Transfer;
+    public DcMotor RightShooter;
+    public DcMotor LeftShooter;
     public DcMotor Kicker;
     private int FrontRightPosition;
     private int FrontLeftPosition;
@@ -32,14 +32,13 @@ public class  ZerexRedFarEncoder extends LinearOpMode {
         BackRight = hardwareMap.get(DcMotor.class, "backRight");
         BackLeft = hardwareMap.get(DcMotor.class, "backLeft");
         Intake = hardwareMap.get(DcMotor.class, "intake");
-        Shooter = hardwareMap.get(DcMotor.class, "shooter");
-        Transfer = hardwareMap.get(DcMotor.class, "belt");
+        RightShooter = hardwareMap.get(DcMotor.class, "rightShooter");
+        LeftShooter = hardwareMap.get(DcMotor.class,"leftShooter");
         Kicker = hardwareMap.get(DcMotor.class,"kicker");
 
         FrontRight.setDirection(DcMotorSimple.Direction.REVERSE);
         BackRight.setDirection(DcMotorSimple.Direction.REVERSE);
-        Transfer.setDirection(DcMotorSimple.Direction.REVERSE);
-        Shooter.setDirection(DcMotorSimple.Direction.REVERSE);
+        RightShooter.setDirection(DcMotorSimple.Direction.REVERSE);
 
         FrontRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         FrontLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -53,16 +52,14 @@ public class  ZerexRedFarEncoder extends LinearOpMode {
         BackLeftPosition = 0;
 
         waitForStart();
-// 30 ticks ~ an inch
+ // 30 ticks ~ an inch
         drive(1111,1111,1111,1111,0.5);
         shoot(1.0,3000);
         drive(225,-225,225,-225,0.5);
         drive(600, -600,-600,600,.5);
         Intake.setPower(1.0);
-        Transfer.setPower(1.0);
         drive(-1111,-1111,-1111,-1111,0.5);
         Intake.setPower(0);
-        Transfer.setPower(0);
         drive(1111,1111,1111,1111,0.5);
         drive(-600,600,600,-600,0.5);
         drive(-300,300,-300,300,0.5);
@@ -86,7 +83,6 @@ public class  ZerexRedFarEncoder extends LinearOpMode {
         BackLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
 
-
         FrontRight.setPower(speed);
         FrontLeft.setPower(speed);
         BackRight.setPower(speed);
@@ -104,15 +100,15 @@ public class  ZerexRedFarEncoder extends LinearOpMode {
     }
 
     public void shoot(double power, long time){
-        Shooter.setPower(power);
+        RightShooter.setPower(power);
+        LeftShooter.setPower(power);
         sleep(2500);
         Intake.setPower(1.0);
-        Transfer.setPower(1.0);
         Kicker.setPower(-1.0);
         sleep(time);
-        Shooter.setPower(0);
+        RightShooter.setPower(0);
+        LeftShooter.setPower(0);
         Intake.setPower(0);
-        Transfer.setPower(0);
         Kicker.setPower(0);
     }
 
