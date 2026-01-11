@@ -3,38 +3,44 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.VoltageSensor;
 @Autonomous
 
 public class  ZerexRedFarEncoder extends LinearOpMode {
 
     //
-    public DcMotor FrontRight;
-    public DcMotor FrontLeft;
-    public DcMotor BackRight;
-    public DcMotor BackLeft;
-    public DcMotor Intake;
-    public DcMotor RightShooter;
-    public DcMotor LeftShooter;
-    public DcMotor Kicker;
+    public DcMotorEx FrontRight;
+    public DcMotorEx FrontLeft;
+    public DcMotorEx BackRight;
+    public DcMotorEx BackLeft;
+    public DcMotorEx Intake;
+    public DcMotorEx RightShooter;
+    public DcMotorEx LeftShooter;
+    public DcMotorEx Kicker;
     private int FrontRightPosition;
     private int FrontLeftPosition;
     private int BackRightPosition;
     private int BackLeftPosition;
+    public VoltageSensor batteryVoltageSensor;
 
 
 
     @Override
     public void runOpMode() throws InterruptedException{
 
-        FrontRight = hardwareMap.get(DcMotor.class, "frontRight");
-        FrontLeft = hardwareMap.get(DcMotor.class, "frontLeft");
-        BackRight = hardwareMap.get(DcMotor.class, "backRight");
-        BackLeft = hardwareMap.get(DcMotor.class, "backLeft");
-        Intake = hardwareMap.get(DcMotor.class, "intake");
-        RightShooter = hardwareMap.get(DcMotor.class, "rightShooter");
-        LeftShooter = hardwareMap.get(DcMotor.class,"leftShooter");
-        Kicker = hardwareMap.get(DcMotor.class,"kicker");
+        FrontRight = hardwareMap.get(DcMotorEx.class, "frontRight");
+        FrontLeft = hardwareMap.get(DcMotorEx.class, "frontLeft");
+        BackRight = hardwareMap.get(DcMotorEx.class, "backRight");
+        BackLeft = hardwareMap.get(DcMotorEx.class, "backLeft");
+        Intake = hardwareMap.get(DcMotorEx.class, "intake");
+        RightShooter = hardwareMap.get(DcMotorEx.class, "rightShooter");
+        LeftShooter = hardwareMap.get(DcMotorEx.class,"leftShooter");
+        Kicker = hardwareMap.get(DcMotorEx.class,"kicker");
+
+
+        batteryVoltageSensor = hardwareMap.voltageSensor.iterator().next();
 
         FrontRight.setDirection(DcMotorSimple.Direction.REVERSE);
         BackRight.setDirection(DcMotorSimple.Direction.REVERSE);
@@ -45,25 +51,40 @@ public class  ZerexRedFarEncoder extends LinearOpMode {
         BackRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         BackLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
+        FrontRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        FrontLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        BackRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        BackLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+
+        FrontLeft.setTargetPositionTolerance(10);
+        FrontRight.setTargetPositionTolerance(10);
+        BackLeft.setTargetPositionTolerance(10);
+        BackRight.setTargetPositionTolerance(10);
 
         FrontRightPosition = 0;
         FrontLeftPosition = 0;
         BackRightPosition = 0;
         BackLeftPosition = 0;
+        double speed = 0.75;
+
 
         waitForStart();
- // 30 ticks ~ an inch
-        drive(1111,1111,1111,1111,0.5);
-        shoot(1.0,3000);
-        drive(225,-225,225,-225,0.5);
-        drive(600, -600,-600,600,.5);
+
+        double startVoltage = batteryVoltageSensor.getVoltage();
+
+        // 30 ticks ~ an inch
+        drive(1111,1111,1111,1111, 0.5);
+        shoot(0.85 ,3000);
+        drive(225,-225,225,-225, speed);
+        drive(600, -600,-600,600, speed);
         Intake.setPower(1.0);
-        drive(-1111,-1111,-1111,-1111,0.5);
+        drive(-1111,-1111,-1111,-1111, 0.5);
         Intake.setPower(0);
-        drive(1111,1111,1111,1111,0.5);
-        drive(-600,600,600,-600,0.5);
-        drive(-300,300,-300,300,0.5);
-        shoot(1.0,3000);
+        drive(1111,1111,1111,1111, speed);
+        drive(-600,600,600,-600, speed);
+
+        drive(-250,250,-250,250, speed);
+        shoot(0.85,3000);
     }
 
     public void drive(int FrontRightTarget, int FrontLeftTarget, int BackRightTarget, int BackLeftTarget, double speed){
@@ -100,8 +121,11 @@ public class  ZerexRedFarEncoder extends LinearOpMode {
     }
 
     public void shoot(double power, long time){
-        RightShooter.setPower(power);
-        LeftShooter.setPower(power);
+        double currentVoltage = batteryVoltageSensor.getVoltage();
+        double shootPower = power * (12.8 / currentVoltage);
+
+        RightShooter.setPower(shootPower);
+        LeftShooter.setPower(shootPower);
         sleep(2500);
         Intake.setPower(1.0);
         Kicker.setPower(-1.0);
@@ -110,6 +134,15 @@ public class  ZerexRedFarEncoder extends LinearOpMode {
         LeftShooter.setPower(0);
         Intake.setPower(0);
         Kicker.setPower(0);
+    }
+
+    public void spin(double power){
+        double currentVoltage = batteryVoltageSensor.getVoltage();
+        double shootPower = power * (12.8 / currentVoltage);
+
+        RightShooter.setPower(shootPower);
+        LeftShooter.setPower(shootPower);
+
     }
 
 }
