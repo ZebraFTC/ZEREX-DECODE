@@ -23,7 +23,7 @@ public class  ZerexRedFarEncoder extends LinearOpMode {
     private int FrontLeftPosition;
     private int BackRightPosition;
     private int BackLeftPosition;
-    public VoltageSensor batteryVoltageSensor;
+    //public VoltageSensor batteryVoltageSensor;
 
 
 
@@ -40,7 +40,7 @@ public class  ZerexRedFarEncoder extends LinearOpMode {
         Kicker = hardwareMap.get(DcMotorEx.class,"kicker");
 
 
-        batteryVoltageSensor = hardwareMap.voltageSensor.iterator().next();
+        //batteryVoltageSensor = hardwareMap.voltageSensor.iterator().next();
 
         FrontRight.setDirection(DcMotorSimple.Direction.REVERSE);
         BackRight.setDirection(DcMotorSimple.Direction.REVERSE);
@@ -50,6 +50,9 @@ public class  ZerexRedFarEncoder extends LinearOpMode {
         FrontLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         BackRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         BackLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+
+        LeftShooter.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
         FrontRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         FrontLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -67,14 +70,16 @@ public class  ZerexRedFarEncoder extends LinearOpMode {
         BackLeftPosition = 0;
         double speed = 0.75;
 
+        LeftShooter.setVelocityPIDFCoefficients(1.2, 0.12, 0.0, 11.7);
+
 
         waitForStart();
 
-        double startVoltage = batteryVoltageSensor.getVoltage();
+        //double startVoltage = batteryVoltageSensor.getVoltage();
 
         // 30 ticks ~ an inch
-        drive(1111,1111,1111,1111, 0.5);
-        shoot(0.85 ,3000);
+        drive(1400,1400,1400,1400, 0.5);
+        shoot(2400 ,3000);
         drive(225,-225,225,-225, speed);
         drive(600, -600,-600,600, speed);
         Intake.setPower(1.0);
@@ -84,7 +89,7 @@ public class  ZerexRedFarEncoder extends LinearOpMode {
         drive(-600,600,600,-600, speed);
 
         drive(-250,250,-250,250, speed);
-        shoot(0.85,3000);
+        shoot(2400,3000);
     }
 
     public void drive(int FrontRightTarget, int FrontLeftTarget, int BackRightTarget, int BackLeftTarget, double speed){
@@ -120,12 +125,12 @@ public class  ZerexRedFarEncoder extends LinearOpMode {
         BackLeft.setPower(0);
     }
 
-    public void shoot(double power, long time){
-        double currentVoltage = batteryVoltageSensor.getVoltage();
-        double shootPower = power * (12.8 / currentVoltage);
+    public void shoot(double velocity, long time){
+        //double currentVoltage = batteryVoltageSensor.getVoltage();
+        //double shootPower = power * (12.8 / currentVoltage);
 
-        RightShooter.setPower(shootPower);
-        LeftShooter.setPower(shootPower);
+        RightShooter.setPower(velocity/2800);
+        LeftShooter.setVelocity(velocity);
         sleep(2500);
         Intake.setPower(1.0);
         Kicker.setPower(-1.0);
@@ -136,13 +141,6 @@ public class  ZerexRedFarEncoder extends LinearOpMode {
         Kicker.setPower(0);
     }
 
-    public void spin(double power){
-        double currentVoltage = batteryVoltageSensor.getVoltage();
-        double shootPower = power * (12.8 / currentVoltage);
 
-        RightShooter.setPower(shootPower);
-        LeftShooter.setPower(shootPower);
-
-    }
 
 }

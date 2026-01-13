@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
 @TeleOp
@@ -15,7 +16,7 @@ public class ZerexTele2 extends LinearOpMode {
     public DcMotor BackLeft;
     public DcMotor Intake;
     public DcMotor RightShooter;
-    public DcMotor LeftShooter;
+    public DcMotorEx LeftShooter;
     public DcMotor Kicker;
     double shootSpeed;
     double driveSpeed;
@@ -30,13 +31,17 @@ public class ZerexTele2 extends LinearOpMode {
         BackLeft = hardwareMap.get(DcMotor.class, "backLeft");
         Intake = hardwareMap.get(DcMotor.class, "intake");
         RightShooter = hardwareMap.get(DcMotor.class, "rightShooter");
-        LeftShooter = hardwareMap.get(DcMotor.class,"leftShooter");
+        LeftShooter = hardwareMap.get(DcMotorEx.class,"leftShooter");
         Kicker = hardwareMap.get(DcMotor.class,"kicker");
 
         //reverse wheel directions on the right
         FrontRight.setDirection(DcMotorSimple.Direction.REVERSE);
         BackRight.setDirection(DcMotorSimple.Direction.REVERSE);
         RightShooter.setDirection(DcMotorSimple.Direction.REVERSE);
+
+        LeftShooter.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+        LeftShooter.setVelocityPIDFCoefficients(1.2, 0.12, 0.0, 11.7);
 
         waitForStart();
 
@@ -63,8 +68,10 @@ public class ZerexTele2 extends LinearOpMode {
                 RBispressed = 1 - RBispressed;
             }
 
-            RightShooter.setPower(RBispressed * shootSpeed);
-            LeftShooter.setPower(RBispressed * shootSpeed);
+            double leftVelocity = RBispressed * shootSpeed * 2800;
+
+            RightShooter.setPower(leftVelocity / 2800);
+            LeftShooter.setVelocity(leftVelocity);
 
 
             //kicker
