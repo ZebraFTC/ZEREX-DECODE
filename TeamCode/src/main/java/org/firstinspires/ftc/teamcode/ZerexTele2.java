@@ -116,6 +116,21 @@ public class ZerexTele2 extends LinearOpMode {
             else {
                 driveSpeed = 1;
             }
+
+            if (gamepad2.x){
+                Kicker.setPower(-1);
+                sleep(50);
+                Kicker.setPower(0);
+            }
+
+            if (gamepad2.b){
+                LeftShooter.setPower(1);
+                RightShooter.setPower(1);
+            } else {
+                LeftShooter.setPower(0);
+                RightShooter.setPower(0);
+            }
+
         }
     }
 }

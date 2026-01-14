@@ -8,7 +8,7 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.VoltageSensor;
 @Autonomous
 
-public class  ZerexRedFarEncoder extends LinearOpMode {
+public class  ZerexBlueFarEncoder extends LinearOpMode {
 
     //
     public DcMotorEx FrontRight;
@@ -80,15 +80,15 @@ public class  ZerexRedFarEncoder extends LinearOpMode {
         // 30 ticks ~ an inch
         drive(1300,1300,1300,1300, 0.5);
         shoot(2400 ,3000);
-        drive(225,-225,225,-225, speed);
-        drive(600, -600,-600,600, speed);
+        drive(-225,225,-225,225, speed);
+        drive(-600, 600,600,-600, speed);
         Intake.setPower(1.0);
         drive(-1111,-1111,-1111,-1111, 0.5);
         Intake.setPower(0);
         drive(1111,1111,1111,1111, speed);
-        drive(-444,444,444,-444, speed);
+        drive(444,-444,-444,444, speed);
 
-        drive(-225,225,-225,225  , speed);
+        drive(225,-225,225,-225, speed);
         drive(-100,-100,-100,-100, speed);
 
         shoot(2400,3000);
@@ -133,16 +133,29 @@ public class  ZerexRedFarEncoder extends LinearOpMode {
 
         RightShooter.setPower(velocity/2800);
         LeftShooter.setVelocity(velocity);
-        telemetry.addData("Velocity", LeftShooter.getVelocity());
-        telemetry.update();
-        sleep(2500);
+
+        double spinTime = getRuntime() + 2.5;
+        while (opModeIsActive() && getRuntime() < spinTime) {
+            telemetry.addData("Actual Velocity", LeftShooter.getVelocity());
+            telemetry.update();
+        }
+
         Intake.setPower(1.0);
         Kicker.setPower(-1.0);
-        sleep(time);
+
+        double fireTime = getRuntime() + (time / 1000.0);
+        while (opModeIsActive() && getRuntime() < fireTime) {
+            telemetry.addData("Actual Velocity", LeftShooter.getVelocity());
+            telemetry.update();
+        }
+
         RightShooter.setPower(0);
-        LeftShooter.setPower(0);
+        LeftShooter.setVelocity(0);
         Intake.setPower(0);
         Kicker.setPower(0);
+
+        telemetry.addData("Actual Velocity", LeftShooter.getVelocity());
+        telemetry.update();
 
 
     }

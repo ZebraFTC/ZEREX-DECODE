@@ -17,7 +17,8 @@ public class taxi extends LinearOpMode {
     public DcMotor BackRight;
     public DcMotor BackLeft;
     public DcMotor Intake;
-    public DcMotor Shooter;
+    public DcMotor LeftShooter;
+    public DcMotor RightShooter;
     public DcMotor Transfer;
 
 
@@ -33,7 +34,8 @@ public class taxi extends LinearOpMode {
         BackRight = hardwareMap.get(DcMotor.class, "backRight");
         BackLeft = hardwareMap.get(DcMotor.class, "backLeft");
         Intake = hardwareMap.get(DcMotor.class, "intake");
-        Shooter = hardwareMap.get(DcMotor.class, "shooter");
+        LeftShooter = hardwareMap.get(DcMotor.class, "leftShooter");
+        RightShooter = hardwareMap.get(DcMotor.class,"rightShooter");
         Transfer = hardwareMap.get(DcMotor.class, "belt");
 
 
@@ -43,7 +45,7 @@ public class taxi extends LinearOpMode {
 
         waitForStart();
 
-        forward(500, .5);// taxi
+        forward(444, .5);// taxi
 
     }
 
@@ -95,18 +97,9 @@ public class taxi extends LinearOpMode {
         BackLeft.setPower(0);
     }
 
-    public void shoot(double power, long time){
-        Shooter.setPower(-power);
-        sleep(2500);
-        Intake.setPower(1.0);
-        Transfer.setPower(1.0);
-        sleep(time);
-        turnOff();
-    }
 
     public void turnOff(){
         Intake.setPower(0);
         Transfer.setPower(0);
-        Shooter.setPower(0);
     }
 }
