@@ -59,10 +59,10 @@ public class  ZerexRedFarEncoder extends LinearOpMode {
         BackRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         BackLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
-        FrontLeft.setTargetPositionTolerance(10);
-        FrontRight.setTargetPositionTolerance(10);
-        BackLeft.setTargetPositionTolerance(10);
-        BackRight.setTargetPositionTolerance(10);
+        FrontLeft.setTargetPositionTolerance(15);
+        FrontRight.setTargetPositionTolerance(15);
+        BackLeft.setTargetPositionTolerance(15);
+        BackRight.setTargetPositionTolerance(15);
 
         FrontRightPosition = 0;
         FrontLeftPosition = 0;
@@ -78,23 +78,24 @@ public class  ZerexRedFarEncoder extends LinearOpMode {
         //double startVoltage = batteryVoltageSensor.getVoltage();
 
         // 30 ticks ~ an inch
-        drive(1300,1300,1300,1300, 0.5);
-        shoot(2400 ,3000);
-        drive(225,-225,225,-225, speed);
-        drive(600, -600,-600,600, speed);
-        Intake.setPower(1.0);
-        drive(-1111,-1111,-1111,-1111, 0.5);
+        drive(1200,1200,1200,1200, 0.5);
+        shoot(2450 ,3000);
+        drive(225,-225,225,-225, 0.5);
+        drive(500, -500,-500,500, speed);
+        Intake.setPower(0.89);
+        drive(-1200,-1200,-1200,-1200, 0.30);
+        sleep(1000);
         Intake.setPower(0);
         drive(1111,1111,1111,1111, speed);
         drive(-444,444,444,-444, speed);
 
-        drive(-225,225,-225,225  , speed);
+        drive(-300,300,-300,300  , 0.5);
         drive(-100,-100,-100,-100, speed);
 
-        shoot(2400,3000);
+        shoot(2450,3000);
     }
 
-    public void drive(int FrontRightTarget, int FrontLeftTarget, int BackRightTarget, int BackLeftTarget, double speed){
+    public void drive(int FrontRightTarget, int FrontLeftTarget, int  BackRightTarget, int BackLeftTarget, double speed){
         FrontRightPosition += FrontRightTarget;
         FrontLeftPosition += FrontLeftTarget;
         BackRightPosition += BackRightTarget;
@@ -137,7 +138,7 @@ public class  ZerexRedFarEncoder extends LinearOpMode {
         telemetry.update();
         sleep(2500);
         Intake.setPower(1.0);
-        Kicker.setPower(-1.0);
+        Kicker.setPower(-0.8);
         sleep(time);
         RightShooter.setPower(0);
         LeftShooter.setPower(0);
