@@ -10,7 +10,6 @@ import com.qualcomm.robotcore.hardware.VoltageSensor;
 
 public class  ZerexRedFarEncoder extends LinearOpMode {
 
-    //
     public DcMotorEx FrontRight;
     public DcMotorEx FrontLeft;
     public DcMotorEx BackRight;
@@ -23,9 +22,6 @@ public class  ZerexRedFarEncoder extends LinearOpMode {
     private int FrontLeftPosition;
     private int BackRightPosition;
     private int BackLeftPosition;
-    //public VoltageSensor batteryVoltageSensor;
-
-
 
     @Override
     public void runOpMode() throws InterruptedException{
@@ -39,9 +35,6 @@ public class  ZerexRedFarEncoder extends LinearOpMode {
         LeftShooter = hardwareMap.get(DcMotorEx.class,"leftShooter");
         Kicker = hardwareMap.get(DcMotorEx.class,"kicker");
 
-
-        //batteryVoltageSensor = hardwareMap.voltageSensor.iterator().next();
-
         FrontRight.setDirection(DcMotorSimple.Direction.REVERSE);
         BackRight.setDirection(DcMotorSimple.Direction.REVERSE);
         RightShooter.setDirection(DcMotorSimple.Direction.REVERSE);
@@ -50,7 +43,6 @@ public class  ZerexRedFarEncoder extends LinearOpMode {
         FrontLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         BackRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         BackLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-
 
         LeftShooter.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
@@ -70,27 +62,23 @@ public class  ZerexRedFarEncoder extends LinearOpMode {
         BackLeftPosition = 0;
         double speed = 0.75;
 
-        LeftShooter.setVelocityPIDFCoefficients(1.2, 0.12, 0.0, 11.7);
-
+        LeftShooter.setVelocityPIDFCoefficients(1.2, 0.15, 0.0, 11.7);
 
         waitForStart();
 
-        //double startVoltage = batteryVoltageSensor.getVoltage();
-
-        // 30 ticks ~ an inch
-        drive(1200,1200,1200,1200, 0.5);
+        drive(1111,1111,1111,1111, 0.5);
         shoot(2450 ,3000);
-        drive(225,-225,225,-225, 0.5);
-        drive(500, -500,-500,500, speed);
+        drive(230,-230,230,-230, 0.5);
+        drive(600,-600,-600,600, 0.5);
         Intake.setPower(0.89);
-        drive(-1200,-1200,-1200,-1200, 0.30);
+        drive(-1050,-1050,-1050,-1050, 0.25);
         sleep(1000);
         Intake.setPower(0);
-        drive(1111,1111,1111,1111, speed);
-        drive(-444,444,444,-444, speed);
+        drive(1111,1111,1111,1111, 0.5);
+        drive(-400,400,400,-400, 0.5);
 
-        drive(-300,300,-300,300  , 0.5);
-        drive(-100,-100,-100,-100, speed);
+        drive(-222,222,-222,222  , 0.5);
+        drive(-100,-100,-100,-100, 0.5);
 
         shoot(2450,3000);
     }
@@ -111,14 +99,14 @@ public class  ZerexRedFarEncoder extends LinearOpMode {
         BackRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         BackLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
-
         FrontRight.setPower(speed);
         FrontLeft.setPower(speed);
         BackRight.setPower(speed);
         BackLeft.setPower(speed);
 
+        double timeout = getRuntime() + 5.0;
 
-        while (opModeIsActive() && FrontRight.isBusy() || FrontLeft.isBusy() || BackRight.isBusy() || BackLeft.isBusy()) {
+        while (opModeIsActive() && (FrontRight.isBusy() || FrontLeft.isBusy() || BackRight.isBusy() || BackLeft.isBusy()) && getRuntime() < timeout){
             idle();
         }
 
@@ -129,25 +117,30 @@ public class  ZerexRedFarEncoder extends LinearOpMode {
     }
 
     public void shoot(double velocity, long time){
-        //double currentVoltage = batteryVoltageSensor.getVoltage();
-        //double shootPower = power * (12.8 / currentVoltage);
-
         RightShooter.setPower(velocity/2800);
         LeftShooter.setVelocity(velocity);
-        telemetry.addData("Velocity", LeftShooter.getVelocity());
-        telemetry.update();
-        sleep(2500);
+
+        double spinTime = getRuntime() + 2.5;
+        while (opModeIsActive() && getRuntime() < spinTime) {
+            telemetry.addData("Actual Velocity", LeftShooter.getVelocity());
+            telemetry.update();
+        }
+
         Intake.setPower(1.0);
         Kicker.setPower(-0.8);
-        sleep(time);
+
+        double fireTime = getRuntime() + (time / 1000.0);
+        while (opModeIsActive() && getRuntime() < fireTime) {
+            telemetry.addData("Actual Velocity", LeftShooter.getVelocity());
+            telemetry.update();
+        }
+
         RightShooter.setPower(0);
-        LeftShooter.setPower(0);
+        LeftShooter.setVelocity(0);
         Intake.setPower(0);
         Kicker.setPower(0);
 
-
+        telemetry.addData("Actual Velocity", LeftShooter.getVelocity());
+        telemetry.update();
     }
-
-
-
 }

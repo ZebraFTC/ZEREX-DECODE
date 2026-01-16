@@ -41,7 +41,7 @@ public class ZerexTele2 extends LinearOpMode {
 
         LeftShooter.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
-        LeftShooter.setVelocityPIDFCoefficients(1.2, 0.12, 0.0, 11.7);
+        LeftShooter.setVelocityPIDFCoefficients(1.2, 0.12, 0.0, 12.25);
 
         waitForStart();
 
@@ -119,7 +119,7 @@ public class ZerexTele2 extends LinearOpMode {
 
             if (gamepad2.x){
                 Kicker.setPower(-1);
-                sleep(50);
+                sleep(150);
                 Kicker.setPower(0);
             }
 

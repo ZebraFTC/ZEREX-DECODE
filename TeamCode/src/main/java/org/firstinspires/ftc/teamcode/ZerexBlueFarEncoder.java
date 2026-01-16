@@ -70,7 +70,7 @@ public class  ZerexBlueFarEncoder extends LinearOpMode {
         BackLeftPosition = 0;
         double speed = 0.75;
 
-        LeftShooter.setVelocityPIDFCoefficients(1.2, 0.12, 0.0, 11.7);
+        LeftShooter.setVelocityPIDFCoefficients(1.2, 0.15, 0.0, 11.7);
 
 
         waitForStart();
@@ -78,19 +78,19 @@ public class  ZerexBlueFarEncoder extends LinearOpMode {
         //double startVoltage = batteryVoltageSensor.getVoltage();
 
         // 30 ticks ~ an inch
-        drive(1200,1200,1200,1200, 0.5);
+        drive(1111,1111,1111,1111, 0.5);
         shoot(2450 ,3000);
-        drive(-225,225,-225,225, 0.5);
-        drive(-500, 500,500,-500, speed);
+        drive(-230,230,-230,230, 0.5);
+        drive(-600, 600,600,-600  , 0.5);
         Intake.setPower(0.89);
-        drive(-1200,-1200,-1200,-1200 , 0.30);
+        drive(-1050,-1050,-1050,-1050, 0.25);
         sleep(100);
         Intake.setPower(0);
-        drive(1111,1111,1111,1111, speed);
-        drive(444,-444,-444,444, speed);
+        drive(1111,1111,1111,1111, 0.5);
+        drive(400,-400,-400,400, 0.5);
 
-        drive(300,-300,300,-300, 0.5);
-        drive(-100,-100,-100,-100 , speed);
+        drive(222,-222,222,-222, 0.5);
+        drive(-100,-100,-100,-100 , 0.5);
 
         shoot(2450,3000);
     }
@@ -117,8 +117,9 @@ public class  ZerexBlueFarEncoder extends LinearOpMode {
         BackRight.setPower(speed);
         BackLeft.setPower(speed);
 
+        double timeout = getRuntime() + 5.0;
 
-        while (opModeIsActive() && FrontRight.isBusy() || FrontLeft.isBusy() || BackRight.isBusy() || BackLeft.isBusy()) {
+        while (opModeIsActive() && (FrontRight.isBusy() || FrontLeft.isBusy() || BackRight.isBusy() || BackLeft.isBusy()) && getRuntime() < timeout){
             idle();
         }
 
@@ -142,7 +143,7 @@ public class  ZerexBlueFarEncoder extends LinearOpMode {
         }
 
         Intake.setPower(1.0);
-        Kicker.setPower(-1.0);
+        Kicker.setPower(-0.8);
 
         double fireTime = getRuntime() + (time / 1000.0);
         while (opModeIsActive() && getRuntime() < fireTime) {
