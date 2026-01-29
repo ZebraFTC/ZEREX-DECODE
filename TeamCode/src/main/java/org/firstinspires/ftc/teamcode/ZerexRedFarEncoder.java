@@ -65,22 +65,29 @@ public class  ZerexRedFarEncoder extends LinearOpMode {
         LeftShooter.setVelocityPIDFCoefficients(1.2, 0.15, 0.0, 11.7);
 
         waitForStart();
-
+//trust the code
         drive(1111,1111,1111,1111, 0.5);
         shoot(2450 ,3000);
         drive(230,-230,230,-230, 0.5);
         drive(600,-600,-600,600, 0.5);
-        Intake.setPower(0.89);
+        Intake.setPower(0.78);
         drive(-1050,-1050,-1050,-1050, 0.25);
+        drive(111,111,111,111,0.25); // little back
         sleep(1000);
         Intake.setPower(0);
-        drive(1111,1111,1111,1111, 0.5);
+        drive(1000,1000,1000,1000, 0.5);
         drive(-400,400,400,-400, 0.5);
 
-        drive(-222,222,-222,222  , 0.5);
-        drive(-100,-100,-100,-100, 0.5);
+        drive(-230,230,-230,230   , 0.5);
+        drive(-100, -100,-100,-100, 0.5);
 
         shoot(2450,3000);
+
+        drive(-222,222,-222,222, 0.5);
+        drive(800,800,800,800,1.0); //back
+        drive(450,-450,450,-450,0.5); //turn
+        drive(-160,-160,-160,-160,0.5); //forward
+
     }
 
     public void drive(int FrontRightTarget, int FrontLeftTarget, int  BackRightTarget, int BackLeftTarget, double speed){

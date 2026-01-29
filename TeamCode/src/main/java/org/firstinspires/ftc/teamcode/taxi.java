@@ -36,12 +36,10 @@ public class taxi extends LinearOpMode {
         Intake = hardwareMap.get(DcMotor.class, "intake");
         LeftShooter = hardwareMap.get(DcMotor.class, "leftShooter");
         RightShooter = hardwareMap.get(DcMotor.class,"rightShooter");
-        Transfer = hardwareMap.get(DcMotor.class, "belt");
 
 
         FrontRight.setDirection(DcMotorSimple.Direction.REVERSE);
         BackRight.setDirection(DcMotorSimple.Direction.REVERSE);
-        Transfer.setDirection(DcMotorSimple.Direction.REVERSE);
 
         waitForStart();
 
