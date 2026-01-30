@@ -25,6 +25,7 @@ public class ZerexTele2Red extends LinearOpMode {
     double driveSpeed;
     int RBispressed;
     boolean isAutoAligning = false;
+    boolean isRangeAligning = false;
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -56,15 +57,25 @@ public class ZerexTele2Red extends LinearOpMode {
 
             if (gamepad1.a) {
                 isAutoAligning = true;
+                isRangeAligning = false;
+            }
+
+            if (gamepad1.y) {
+                isRangeAligning = true;
+                isAutoAligning = false;
             }
 
             if (gamepad1.b || Math.abs(gamepad1.left_stick_y) > 0.1 ||
                     Math.abs(gamepad1.right_stick_x) > 0.1 || Math.abs(gamepad1.left_stick_x) > 0.1) {
                 isAutoAligning = false;
+                isRangeAligning = false;
             }
             if (isAutoAligning) {
-                autoAlign(24  , 0, 1.5);
-                telemetry.addData("Mode", "AUTO ALIGNING");
+                autoAlign(24, 0, 1.5);
+                telemetry.addData("Mode", "AUTO ALIGNING (BEARING)");
+            } else if (isRangeAligning) {
+                autoAlignRange(20, 40, 2.0);
+                telemetry.addData("Mode", "AUTO ALIGNING (RANGE)");
             } else {
                 double drive = driveSpeed * gamepad1.left_stick_y;
                 double turn = -driveSpeed * gamepad1.right_stick_x;
@@ -137,8 +148,8 @@ public class ZerexTele2Red extends LinearOpMode {
                 sleep(500);
             }
             if (gamepad2.b){
-                LeftShooter.setPower(1);
-                RightShooter.setPower(1);
+                LeftShooter.setPower(-1);
+                RightShooter.setPower(-1);
             } else {
                 LeftShooter.setPower(0);
                 RightShooter.setPower(0);
@@ -148,10 +159,11 @@ public class ZerexTele2Red extends LinearOpMode {
             if (gamepad1.left_bumper && gamepad1.right_bumper) {
                 displayAprilTagRange(24);
             } else {
-                telemetry.addData("AprilTag Info", "Press L+R Bumpers to view");
+
             }
 
-            telemetry.addData("Press A", "Auto-align to tag");
+            telemetry.addData("Press A", "Auto-align bearing");
+            telemetry.addData("Press Y", "Auto-align to 50\" range");
             telemetry.addData("Press B or move", "Cancel alignment");
             telemetry.update();
 
@@ -234,6 +246,64 @@ public class ZerexTele2Red extends LinearOpMode {
             telemetry.addData("Current Bearing", "%.2f°", currentBearing);
             telemetry.addData("Target Bearing", "%.2f°", targetBearing);
             telemetry.addData("Error", "%.2f°", error);
+        }
+    }
+
+    public void autoAlignRange(int targetId, double targetRange, double tolerance) {
+        aprilTagTest.update();
+        AprilTagDetection detectedTag = aprilTagTest.getTagBySpecificId(targetId);
+
+        if (detectedTag == null) {
+            FrontRight.setPower(0);
+            FrontLeft.setPower(0);
+            BackRight.setPower(0);
+            BackLeft.setPower(0);
+
+            telemetry.addData("Range Align Status", "Searching for tag...");
+            telemetry.addData("Target Tag ID", targetId);
+            return;
+        }
+
+        double currentRange = detectedTag.ftcPose.range;
+        double error = targetRange - currentRange;
+
+        if (Math.abs(error) <= tolerance) {
+            FrontRight.setPower(0);
+            FrontLeft.setPower(0);
+            BackRight.setPower(0);
+            BackLeft.setPower(0);
+
+            telemetry.addData("Range Align Status", "ALIGNED!");
+            telemetry.addData("Current Range", "%.2f inches", currentRange);
+            telemetry.addData("Target Range", "%.2f inches", targetRange);
+        } else {
+            double drivePower;
+            if (Math.abs(error) < 1.0) {
+                drivePower = 0;
+            } else {
+                // Proportional control: positive error means need to move forward (away), negative means backward (closer)
+                drivePower = error * 0.015;
+
+                // Minimum power threshold
+                if (Math.abs(drivePower) < 0.1 && Math.abs(drivePower) > 0) {
+                    drivePower = Math.signum(drivePower) * 0.1;
+                }
+
+                // Clamp power to safe range
+                drivePower = Math.max(-0.5, Math.min(0.5 , drivePower));
+            }
+
+            // Drive forward/backward to adjust range
+            FrontRight.setPower(drivePower);
+            FrontLeft.setPower(drivePower);
+            BackRight.setPower(drivePower);
+            BackLeft.setPower(drivePower);
+
+            telemetry.addData("Range Align Status", "Aligning...");
+            telemetry.addData("Current Range", "%.2f inches", currentRange);
+            telemetry.addData("Target Range", "%.2f inches", targetRange);
+            telemetry.addData("Error", "%.2f inches", error);
+            telemetry.addData("Drive Power", "%.2f", drivePower);
         }
     }
 }

@@ -69,8 +69,9 @@ public class ZerexRedFarApril extends LinearOpMode {
         waitForStart();
 
         drive(1111,1111,1111,1111, 0.7);
-        continuousAlignToTag(24,27.5,1.5,2);
-        shoot(2450 ,3000);
+        continuousAlignToTag(24,7,2,3);
+        autoAlignRange(24,30,1);
+        shoot(2100 ,3000);
         drive(230,-230,230,-230, 0.7);
         drive(600,-600,-600,600 , 0.7);
         Intake.setPower(0.78);
@@ -79,15 +80,15 @@ public class ZerexRedFarApril extends LinearOpMode {
         sleep(500);
         Intake.setPower(0);
         drive(1000,1000,1000,1000, 0.7);
-        drive(-400,400,400,-400, 0.7);
+        drive(-350,350,350,-400, 0.7);
         drive(-250,250,-250,250, 0.7);
         drive(-100,-100,-100,-100 , 0.7);
-        continuousAlignToTag(24,27.5,1.5,2);
-        shoot(2450,3000);
-        drive(-222,222,-222,222 , 0.7);
-        drive(700,700,700,700,1.0);
-        drive(450,-450,450,-450,0.7);
-        drive(-160,-160,-160,-160,1.0);
+        continuousAlignToTag(24,7,2 ,3);
+        autoAlignRange(24,30,1);
+        shoot(2500,3000);
+        drive(233,-233,233,-233  , 0.7);
+        drive(800,-800,-800,800,1.0);
+
     }
 
     public void drive(int FrontRightTarget, int FrontLeftTarget, int BackRightTarget, int BackLeftTarget, double speed) {
@@ -152,7 +153,7 @@ public class ZerexRedFarApril extends LinearOpMode {
         telemetry.update();
     }
 
-    public void continuousAlignToTag(int targetId, double targetYaw, double tolerance, double maxDuration) {
+    public void continuousAlignToTag(int targetId, double targetBearing, double tolerance, double maxDuration) {
         FrontRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         FrontLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         BackRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
@@ -180,8 +181,8 @@ public class ZerexRedFarApril extends LinearOpMode {
                 continue;
             }
 
-            double currentYaw = detectedTag.ftcPose.yaw;
-            double error = targetYaw - currentYaw;
+            double currentBearing = detectedTag.ftcPose.bearing;
+            double error = targetBearing - currentBearing;
 
             if (Math.abs(error) <= tolerance) {
                 consecutiveAlignedCount++;
@@ -193,7 +194,7 @@ public class ZerexRedFarApril extends LinearOpMode {
                     BackLeft.setPower(0);
 
                     telemetry.addData("Status", "ALIGNED!");
-                    telemetry.addData("Final Yaw", "%.2f", currentYaw);
+                    telemetry.addData("Final Bearing", "%.2f", currentBearing);
                     telemetry.update();
                     break;
                 }
@@ -227,8 +228,8 @@ public class ZerexRedFarApril extends LinearOpMode {
                 telemetry.addData("Status", "Aligning...");
             }
 
-            telemetry.addData("Current Yaw", "%.2f°", currentYaw);
-            telemetry.addData("Target Yaw", "%.2f°", targetYaw);
+            telemetry.addData("Current Bearing", "%.2f°", currentBearing);
+            telemetry.addData("Target Bearing", "%.2f°", targetBearing);
             telemetry.addData("Error", "%.2f°", error);
             telemetry.addData("Time Remaining", "%.1fs", endTime - getRuntime());
             telemetry.update();
@@ -245,7 +246,7 @@ public class ZerexRedFarApril extends LinearOpMode {
         }
     }
 
-    public void alignToTag(int targetId, double targetYaw, double tolerance) {
+    public void alignToTag(int targetId, double targetBearing, double tolerance) {
         aprilTagTest.update();
         AprilTagDetection detectedTag = aprilTagTest.getTagBySpecificId(targetId);
 
@@ -255,10 +256,10 @@ public class ZerexRedFarApril extends LinearOpMode {
             return;
         }
 
-        double currentYaw = detectedTag.ftcPose.yaw;
+        double currentBearing = detectedTag.ftcPose.bearing;
         double timeout = getRuntime() + 3.0;
 
-        while (opModeIsActive() && Math.abs(currentYaw - targetYaw) > tolerance && getRuntime() < timeout) {
+        while (opModeIsActive() && Math.abs(currentBearing - targetBearing) > tolerance && getRuntime() < timeout) {
             aprilTagTest.update();
             detectedTag = aprilTagTest.getTagBySpecificId(targetId);
 
@@ -266,8 +267,8 @@ public class ZerexRedFarApril extends LinearOpMode {
                 break;
             }
 
-            currentYaw = detectedTag.ftcPose.yaw;
-            double error = targetYaw - currentYaw;
+            currentBearing = detectedTag.ftcPose.bearing;
+            double error = targetBearing - currentBearing;
             double turnPower = Math.max(-0.3, Math.min(0.3, error * 0.02));
 
             FrontRight.setPower(-turnPower);
@@ -275,8 +276,8 @@ public class ZerexRedFarApril extends LinearOpMode {
             BackRight.setPower(-turnPower);
             BackLeft.setPower(turnPower);
 
-            telemetry.addData("Current Yaw", "%.2f", currentYaw);
-            telemetry.addData("Target Yaw", "%.2f", targetYaw);
+            telemetry.addData("Current Bearing", "%.2f", currentBearing);
+            telemetry.addData("Target Bearing", "%.2f", targetBearing);
             telemetry.addData("Error", "%.2f", error);
             telemetry.update();
         }
@@ -285,5 +286,60 @@ public class ZerexRedFarApril extends LinearOpMode {
         FrontLeft.setPower(0);
         BackRight.setPower(0);
         BackLeft.setPower(0);
+    }
+
+    public void autoAlignRange(int targetId, double targetRange, double tolerance) {
+        aprilTagTest.update();
+        AprilTagDetection detectedTag = aprilTagTest.getTagBySpecificId(targetId);
+
+        if (detectedTag == null) {
+            FrontRight.setPower(0);
+            FrontLeft.setPower(0);
+            BackRight.setPower(0);
+            BackLeft.setPower(0);
+
+            telemetry.addData("Range Align Status", "Searching for tag...");
+            telemetry.addData("Target Tag ID", targetId);
+            return;
+        }
+
+        double currentRange = detectedTag.ftcPose.range;
+        double error = targetRange - currentRange;
+
+        if (Math.abs(error) <= tolerance) {
+            FrontRight.setPower(0);
+            FrontLeft.setPower(0);
+            BackRight.setPower(0);
+            BackLeft.setPower(0);
+
+            telemetry.addData("Range Align Status", "ALIGNED!");
+            telemetry.addData("Current Range", "%.2f inches", currentRange);
+            telemetry.addData("Target Range", "%.2f inches", targetRange);
+        } else {
+            double drivePower;
+            if (Math.abs(error) < 1.0) {
+                drivePower = 0;
+            } else {
+                drivePower = error * 0.015;
+
+                if (Math.abs(drivePower) < 0.1 && Math.abs(drivePower) > 0) {
+                    drivePower = Math.signum(drivePower) * 0.1;
+                }
+
+                drivePower = Math.max(-0.5, Math.min(0.5, drivePower));
+            }
+
+            // Drive forward/backward to adjust range
+            FrontRight.setPower(drivePower);
+            FrontLeft.setPower(drivePower);
+            BackRight.setPower(drivePower);
+            BackLeft.setPower(drivePower);
+
+            telemetry.addData("Range Align Status", "Aligning...");
+            telemetry.addData("Current Range", "%.2f inches", currentRange);
+            telemetry.addData("Target Range", "%.2f inches", targetRange);
+            telemetry.addData("Error", "%.2f inches", error);
+            telemetry.addData("Drive Power", "%.2f", drivePower);
+        }
     }
 }
