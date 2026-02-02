@@ -9,7 +9,7 @@ import com.qualcomm.robotcore.hardware.VoltageSensor;
 import org.firstinspires.ftc.vision.apriltag.AprilTagDetection;
 
 @Autonomous
-public class ZerexBlueFarApril extends LinearOpMode {
+public class vihaans9ballblue extends LinearOpMode {
     AprilTagTest aprilTagTest = new AprilTagTest();
     public DcMotorEx FrontRight;
     public DcMotorEx FrontLeft;
@@ -64,31 +64,42 @@ public class ZerexBlueFarApril extends LinearOpMode {
 
         double speed = 0.75;
 
-        LeftShooter.setVelocityPIDFCoefficients(0.05, 0.15, 0.0, 11.7);
+        LeftShooter.setVelocityPIDFCoefficients(0.05, 0.0, 0.0, 11.7);
 
         waitForStart();
 
-
-        drive(1000,1000,1000,1000, 0.7);
-
-        shoot(2000 ,3000);
-        drive(-230,230,-230,230, 0.7);
-        drive(-600, 600,600,-600  , 0.7);
-        Intake.setPower(0.78);
-        drive(-999,-999,-999,-999, 0.25);
-        drive(111,111,111,111,0.25); // little back
-        sleep(500);
+        LeftShooter.setVelocity(2000);
+        RightShooter.setPower(LeftShooter.getPower());
+        drive(1000,1000,1000,1000, 1);
+        Intake.setPower(1.0);
+        Kicker.setPower(-0.8);
+        sleep(3000);
+        RightShooter.setPower(0);
+        LeftShooter.setVelocity(0);
         Intake.setPower(0);
-        drive(888,888,888,888, 0.7);
+        Kicker.setPower(0);
+        drive(-230,230,-230,230, 1);
+        drive(-600, 600,600,-600  , 1);
+        Intake.setPower(0.78);
+        drive(-700,-700,-700,-700, 0.5);
+        Intake.setPower(0);
+        drive(567,567,567,567, 1);
         drive(329,-329,-329,329, 0.7);
 
-        drive(222,-222,222,-222, 0.7);
-        drive(-300,-300,-300,-300 , 0.7);
+        drive(222,-222,222,-222, 1);
 
         shoot(2400 ,3000);
 
-        drive(-233,233,-233,233  , 0.7);
-        drive(-888,888,888,-888,1.0);
+        drive(-233,233,-233,233  , 1);
+        drive(-1488,1488,1488,-1488,1.0);
+
+        Intake.setPower(0.78);
+        drive(-700,-700,-700,-700, 0.5);
+        Intake.setPower(0);
+        drive(567,567,567,567, 1);
+        drive(1488,-1488,-1488,1488, 1);
+        drive(329,-329,-329,329, 0.7);
+        shoot(2400 ,3000);
 
 
 
@@ -156,6 +167,9 @@ public class ZerexBlueFarApril extends LinearOpMode {
         telemetry.addData("Actual Velocity", LeftShooter.getVelocity());
         telemetry.update();
     }
+
+
+
     public void continuousAlignToTag(int targetId, double targetBearing, double tolerance, double maxDuration) {
         FrontRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         FrontLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);

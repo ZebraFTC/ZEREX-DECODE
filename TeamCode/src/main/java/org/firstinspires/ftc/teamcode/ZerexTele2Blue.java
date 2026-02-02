@@ -47,7 +47,7 @@ public class ZerexTele2Blue extends LinearOpMode {
 
         LeftShooter.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
-        LeftShooter.setVelocityPIDFCoefficients(1.2, 0.12, 0.0, 12.25);
+        LeftShooter.setVelocityPIDFCoefficients(0.05, 0.0, 0.0, 12.25);
 
         waitForStart();
 
@@ -100,9 +100,9 @@ public class ZerexTele2Blue extends LinearOpMode {
 
             double leftVelocity = RBispressed * shootSpeed * 2800;
 
-            RightShooter.setPower(leftVelocity / 2800);
-            LeftShooter.setVelocity(leftVelocity);
 
+            LeftShooter.setVelocity(leftVelocity);
+            RightShooter.setPower(LeftShooter.getPower());
 
             if(gamepad2.right_trigger > 0){
                 Kicker.setPower(-1);

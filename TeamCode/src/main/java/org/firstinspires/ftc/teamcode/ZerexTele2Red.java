@@ -47,7 +47,7 @@ public class ZerexTele2Red extends LinearOpMode {
 
         LeftShooter.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
-        LeftShooter.setVelocityPIDFCoefficients(1.2, 0.12, 0.0, 12.25);
+        LeftShooter.setVelocityPIDFCoefficients(0.05, 0.0, 0.0, 12.25);
 
         waitForStart();
 

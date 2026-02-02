@@ -64,7 +64,7 @@ public class ZerexRedFarApril extends LinearOpMode {
 
         double speed = 0.75;
 
-        LeftShooter.setVelocityPIDFCoefficients(1.2, 0.15, 0.0, 11.7);
+        LeftShooter.setVelocityPIDFCoefficients(0.05, 0.0, 0.0, 11.7);
 
         waitForStart();
 
@@ -85,9 +85,7 @@ public class ZerexRedFarApril extends LinearOpMode {
 
         shoot(2333,3000);
         drive(233,-233,233,-233  , 0.7);
-        drive(
-
-                ,-888,-888,888,1.0);
+        drive(888,-888,-888,888,1.0);
 
     }
 
@@ -126,8 +124,8 @@ public class ZerexRedFarApril extends LinearOpMode {
     }
 
     public void shoot(double velocity, long time) {
-        RightShooter.setPower(velocity / 2800);
         LeftShooter.setVelocity(velocity);
+        RightShooter.setPower(LeftShooter.getPower());
 
         double spinTime = getRuntime() + 2.5;
         while (opModeIsActive() && getRuntime() < spinTime) {
