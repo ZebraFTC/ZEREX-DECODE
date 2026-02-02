@@ -39,8 +39,7 @@ public class vihaans9ballblue extends LinearOpMode {
 
         FrontRight.setDirection(DcMotorSimple.Direction.REVERSE);
         BackRight.setDirection(DcMotorSimple.Direction.REVERSE);
-        RightShooter.setDirection(DcMotorSimple.Direction.REhj9--
-                VERSE);
+        RightShooter.setDirection(DcMotorSimple.Direction.REVERSE);
 
         FrontRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         FrontLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
