@@ -19,6 +19,9 @@ android {
     namespace = 'org.firstinspires.ftc.practice'
 
     packagingOptions {
+        jniLibs {
+            pickFirsts += ['**/*.so']
+        }
         jniLibs.useLegacyPackaging true
     }
 }

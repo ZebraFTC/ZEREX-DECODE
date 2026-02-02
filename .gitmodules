@@ -1,0 +1,3 @@
+[submodule "TeamCode/src/main/java/org/firstinspires/ftc/teamcode/dashboard"]
+	path = TeamCode/src/main/java/org/firstinspires/ftc/teamcode/dashboard
+	url = https://github.com/acmerobotics/ftc-dashboard.git

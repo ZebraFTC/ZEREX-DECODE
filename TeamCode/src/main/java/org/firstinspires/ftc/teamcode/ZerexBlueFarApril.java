@@ -80,7 +80,7 @@ public class ZerexBlueFarApril extends LinearOpMode {
         sleep(500);
         Intake.setPower(0);
         drive(888,888,888,888, 0.7);
-        drive(329,-329,-329,329, 0.7);
+        drive(388,-388,-388,388, 0.7);
 
         drive(222,-222,222,-222, 0.7);
         drive(-300,-300,-300,-300 , 0.7);
@@ -88,7 +88,7 @@ public class ZerexBlueFarApril extends LinearOpMode {
         shoot(2400 ,3000);
 
         drive(-233,233,-233,233  , 0.7);
-        drive(-888,888,888,-888,1.0);
+        drive(-948,948,948,-948,1.0);
 
 
 

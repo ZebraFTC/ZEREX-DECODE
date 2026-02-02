@@ -39,7 +39,8 @@ public class vihaans9ballblue extends LinearOpMode {
 
         FrontRight.setDirection(DcMotorSimple.Direction.REVERSE);
         BackRight.setDirection(DcMotorSimple.Direction.REVERSE);
-        RightShooter.setDirection(DcMotorSimple.Direction.REVERSE);
+        RightShooter.setDirection(DcMotorSimple.Direction.REhj9--
+                VERSE);
 
         FrontRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         FrontLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -68,20 +69,13 @@ public class vihaans9ballblue extends LinearOpMode {
 
         waitForStart();
 
-        LeftShooter.setVelocity(2000);
-        RightShooter.setPower(LeftShooter.getPower());
-        drive(1000,1000,1000,1000, 1);
-        Intake.setPower(1.0);
-        Kicker.setPower(-0.8);
-        sleep(3000);
-        RightShooter.setPower(0);
-        LeftShooter.setVelocity(0);
-        Intake.setPower(0);
-        Kicker.setPower(0);
+        drive(1000,1000,1000,1000, 0.7);
+
+        shoot(2000 ,3000);
         drive(-230,230,-230,230, 1);
         drive(-600, 600,600,-600  , 1);
         Intake.setPower(0.78);
-        drive(-700,-700,-700,-700, 0.5);
+        drive(-800,-800,-800,-800, 0.25);
         Intake.setPower(0);
         drive(567,567,567,567, 1);
         drive(329,-329,-329,329, 0.7);
@@ -91,13 +85,13 @@ public class vihaans9ballblue extends LinearOpMode {
         shoot(2400 ,3000);
 
         drive(-233,233,-233,233  , 1);
-        drive(-1488,1488,1488,-1488,1.0);
+        drive(-1438,1438,1438,-1438,1.0);
 
         Intake.setPower(0.78);
-        drive(-700,-700,-700,-700, 0.5);
+        drive(-800,-800,-800,-800, 0.25);
         Intake.setPower(0);
-        drive(567,567,567,567, 1);
-        drive(1488,-1488,-1488,1488, 1);
+        drive(567,567,567,567, 0.7);
+        drive(1438,-1438,-1438,1438, 1);
         drive(329,-329,-329,329, 0.7);
         shoot(2400 ,3000);
 
