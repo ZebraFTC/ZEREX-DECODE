@@ -52,10 +52,10 @@ public class ZerexBlueFarApril extends LinearOpMode {
         BackRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         BackLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
-        FrontLeft.setTargetPositionTolerance(15);
-        FrontRight.setTargetPositionTolerance(15);
-        BackLeft.setTargetPositionTolerance(15);
-        BackRight.setTargetPositionTolerance(15);
+        FrontLeft.setTargetPositionTolerance(10);
+        FrontRight.setTargetPositionTolerance(10);
+        BackLeft.setTargetPositionTolerance(10);
+        BackRight.setTargetPositionTolerance(10);
 
         FrontRightPosition = 0;
         FrontLeftPosition = 0;
@@ -69,12 +69,9 @@ public class ZerexBlueFarApril extends LinearOpMode {
         waitForStart();
 
 
-        drive(1111,1111,1111,1111, 0.7);
+        drive(1000,1000,1000,1000, 0.7);
 
-        continuousAlignToTag(20,-7,2,2);
-        autoAlignRange(20,30,1);
-
-        shoot(2100 ,3000);
+        shoot(2000 ,3000);
         drive(-230,230,-230,230, 0.7);
         drive(-600, 600,600,-600  , 0.7);
         Intake.setPower(0.78);
@@ -82,18 +79,16 @@ public class ZerexBlueFarApril extends LinearOpMode {
         drive(111,111,111,111,0.25); // little back
         sleep(500);
         Intake.setPower(0);
-        drive(1000,1000,1000,1000, 0.7);
-        drive(350,-350,-350,350, 0.7);
+        drive(888,888,888,888, 0.7);
+        drive(329,-329,-329,329, 0.7);
 
-        drive(250,-250,250,-250, 0.7);
-        drive(-100,-100,-100,-100 , 0.7);
+        drive(222,-222,222,-222, 0.7);
+        drive(-300,-300,-300,-300 , 0.7);
 
-        continuousAlignToTag(20,-7,2,2);
-        autoAlignRange(20,30,1);
-        shoot(2500 ,3000);
+        shoot(2400 ,3000);
 
         drive(-233,233,-233,233  , 0.7);
-        drive(-800,800,800,-800,1.0);
+        drive(-888,888,888,-888,1.0);
 
 
 
@@ -122,7 +117,7 @@ public class ZerexBlueFarApril extends LinearOpMode {
         BackRight.setPower(speed);
         BackLeft.setPower(speed);
 
-        double timeout = getRuntime() + 5.0;
+        double timeout = getRuntime() + 2.5 ;
         while (opModeIsActive() && (FrontRight.isBusy() || FrontLeft.isBusy() || BackRight.isBusy() || BackLeft.isBusy()) && getRuntime() < timeout) {
             aprilTagTest.update();
             idle();
