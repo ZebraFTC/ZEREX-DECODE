@@ -70,7 +70,7 @@ public class vihaans9ballblue extends LinearOpMode {
 
         drive(1000,1000,1000,1000, 0.7);
 
-        shoot(2000 ,3000);
+        shoot(2400 ,3000);
         drive(-230,230,-230,230, 1);
         drive(-600, 600,600,-600  , 1);
         Intake.setPower(0.78);

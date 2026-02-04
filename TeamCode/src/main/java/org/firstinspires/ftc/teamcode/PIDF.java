@@ -39,11 +39,11 @@ public class PIDF extends LinearOpMode {
 
             // D-pad controls for tuning
             if (gamepad1.dpad_right) {
-                p += 0.05;
+                p += 0.0005;
                 sleep(150); // Debounce delay
             }
             if (gamepad1.dpad_left) {
-                p -= 0.05;
+                p -= 0.0005;
                 sleep(150);
             }
             if (gamepad1.dpad_up) {
@@ -60,7 +60,7 @@ public class PIDF extends LinearOpMode {
 
             // Shooter control
             if (gamepad1.a) {
-                LeftShooter.setVelocity(2800);
+                LeftShooter.setVelocity(2200);
                 RightShooter.setPower(LeftShooter.getPower());
             } else {
                 LeftShooter.setVelocity(0);
