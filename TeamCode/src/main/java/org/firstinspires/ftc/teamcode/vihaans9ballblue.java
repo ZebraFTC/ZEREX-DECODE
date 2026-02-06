@@ -52,10 +52,10 @@ public class vihaans9ballblue extends LinearOpMode {
         BackRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         BackLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
-        FrontLeft.setTargetPositionTolerance(10);
-        FrontRight.setTargetPositionTolerance(10);
-        BackLeft.setTargetPositionTolerance(10);
-        BackRight.setTargetPositionTolerance(10);
+        FrontLeft.setTargetPositionTolerance(33);
+        FrontRight.setTargetPositionTolerance(33);
+        BackLeft.setTargetPositionTolerance(33);
+        BackRight.setTargetPositionTolerance(33);
 
         FrontRightPosition = 0;
         FrontLeftPosition = 0;
@@ -64,35 +64,37 @@ public class vihaans9ballblue extends LinearOpMode {
 
         double speed = 0.75;
 
-        LeftShooter.setVelocityPIDFCoefficients(0.05, 0.0, 0.0, 11.7);
+        LeftShooter.setVelocityPIDFCoefficients(0.005, 0.0, 0.0, 11.7);
 
         waitForStart();
 
-        drive(1000,1000,1000,1000, 0.7);
+        drive(1000,1000,1000,1000, 1);
 
-        shoot(2400 ,3000);
+        shoot(2200 ,3000);
         drive(-230,230,-230,230, 1);
-        drive(-600, 600,600,-600  , 1);
+        drive(-800, 800,800,-800  , 1);
         Intake.setPower(0.78);
-        drive(-800,-800,-800,-800, 0.25);
-        Intake.setPower(0);
+        drive(-1300,-1300,-1300,-1300, 0.3);
+
+        drive(597,597,597,597, 1);
+        drive(405,-405,-405,405, 0.7);
+
+        drive(300,-300,300,-300, 1);
+
+        shoot(2100 ,3000);
+
+        drive(-375,375,-375,375  , 1);
+        drive(300,300,300,300,1);
+        drive(-1465,1465,1465,-1465,1.0);
+
+        Intake.setPower(0.78);
+        drive(-1100,-1100,-1100,-1100, 0.25);
+
         drive(567,567,567,567, 1);
-        drive(329,-329,-329,329, 0.7);
-
-        drive(222,-222,222,-222, 1);
-
-        shoot(2400 ,3000);
-
-        drive(-233,233,-233,233  , 1);
-        drive(-1438,1438,1438,-1438,1.0);
-
-        Intake.setPower(0.78);
-        drive(-800,-800,-800,-800, 0.25);
-        Intake.setPower(0);
-        drive(567,567,567,567, 0.7);
-        drive(1438,-1438,-1438,1438, 1);
-        drive(329,-329,-329,329, 0.7);
-        shoot(2400 ,3000);
+        drive(1470,-1470,-1470,1470, 1);
+        drive(225,-225,225,-225, 1);
+        shoot(2100 ,3000);
+        drive(300,-300,-300,300 , 1);
 
 
 

@@ -9,7 +9,7 @@ import org.firstinspires.ftc.vision.apriltag.AprilTagDetection;
 
 @TeleOp
 
-public class ZerexTele2Blue extends LinearOpMode {
+public class BlueTeleNoPIDF extends LinearOpMode {
 
     AprilTagTest aprilTagTest = new AprilTagTest();
     public DcMotor FrontRight;
@@ -47,7 +47,6 @@ public class ZerexTele2Blue extends LinearOpMode {
 
         LeftShooter.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
-        LeftShooter.setVelocityPIDFCoefficients(0.05, 0.0, 0.0, 12.25);
 
         waitForStart();
 
@@ -143,7 +142,7 @@ public class ZerexTele2Blue extends LinearOpMode {
 
             if (gamepad2.x){
                 Kicker.setPower(-1);
-                sleep(85);
+                sleep(150);
                 Kicker.setPower(0);
                 sleep(500);
             }

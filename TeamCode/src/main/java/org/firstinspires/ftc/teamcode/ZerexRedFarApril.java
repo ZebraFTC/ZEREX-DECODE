@@ -64,7 +64,7 @@ public class ZerexRedFarApril extends LinearOpMode {
 
         double speed = 0.75;
 
-        LeftShooter.setVelocityPIDFCoefficients(0.05, 0.0, 0.0, 11.7);
+        LeftShooter.setVelocityPIDFCoefficients(0.005, 0.0, 0.0, 11.7);
 
         waitForStart();
 

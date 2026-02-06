@@ -143,7 +143,7 @@ public class ZerexTele2Red extends LinearOpMode {
 
             if (gamepad2.x){
                 Kicker.setPower(-1);
-                sleep(150);
+                sleep(85);
                 Kicker.setPower(0);
                 sleep(500);
             }

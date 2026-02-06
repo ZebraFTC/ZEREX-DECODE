@@ -12,16 +12,21 @@ public class PIDF extends LinearOpMode {
 
     public DcMotorEx RightShooter;
     public DcMotorEx LeftShooter;
+    public DcMotor Intake;
+    public DcMotor Kicker;
     double p;
     double i;
     double d;
     double f;
+    int shootSpeed;
 
     @Override
     public void runOpMode() throws InterruptedException {
 
         RightShooter = hardwareMap.get(DcMotorEx.class, "rightShooter");
         LeftShooter = hardwareMap.get(DcMotorEx.class,"leftShooter");
+        Intake = hardwareMap.get(DcMotor.class,"intake");
+        Kicker = hardwareMap.get(DcMotor.class, "kicker");
 
         RightShooter.setDirection(DcMotorSimple.Direction.REVERSE);
 
@@ -35,24 +40,33 @@ public class PIDF extends LinearOpMode {
 
         waitForStart();
 
+        shootSpeed = 2000;
         while (opModeIsActive()) {
 
             // D-pad controls for tuning
             if (gamepad1.dpad_right) {
                 p += 0.0005;
-                sleep(150); // Debounce delay
+                sleep(250); // Debounce delay
             }
             if (gamepad1.dpad_left) {
-                p -= 0.0005;
-                sleep(150);
+                p -= 0.0001;
+                sleep(250);
             }
             if (gamepad1.dpad_up) {
                 f += 0.05;
-                sleep(150);
+                sleep(250);
             }
             if (gamepad1.dpad_down) {
                 f -= 0.05;
-                sleep(150);
+                sleep(250);
+            }
+            if (gamepad1.left_bumper) {
+                shootSpeed -= 10;
+                sleep(250);
+            }
+            if (gamepad1.right_bumper) {
+                shootSpeed += 10;
+                sleep(250);
             }
 
             // Update PIDF coefficients
@@ -60,11 +74,19 @@ public class PIDF extends LinearOpMode {
 
             // Shooter control
             if (gamepad1.a) {
-                LeftShooter.setVelocity(2200);
+                LeftShooter.setVelocity(shootSpeed);
                 RightShooter.setPower(LeftShooter.getPower());
             } else {
                 LeftShooter.setVelocity(0);
                 RightShooter.setPower(0);
+            }
+
+            if (gamepad1.b) {
+                Intake.setPower(1);
+                Kicker.setPower(-1);
+            } else {
+                Intake.setPower(0);
+                Kicker.setPower(0);
             }
 
             // Telemetry
@@ -72,6 +94,7 @@ public class PIDF extends LinearOpMode {
             telemetry.addData("F", f);
             telemetry.addData("Left Velocity", LeftShooter.getVelocity());
             telemetry.addData("Right Velocity", RightShooter.getVelocity());
+            telemetry.addData("shootSpeed",shootSpeed);
             telemetry.update();
         }
     }
