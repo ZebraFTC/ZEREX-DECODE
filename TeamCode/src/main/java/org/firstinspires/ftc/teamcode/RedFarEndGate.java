@@ -9,7 +9,7 @@ import com.qualcomm.robotcore.hardware.VoltageSensor;
 import org.firstinspires.ftc.vision.apriltag.AprilTagDetection;
 
 @Autonomous
-public class ZerexBlueFarApril extends LinearOpMode {
+public class RedFarEndGate extends LinearOpMode {
     AprilTagTest aprilTagTest = new AprilTagTest();
     public DcMotorEx FrontRight;
     public DcMotorEx FrontLeft;
@@ -64,34 +64,29 @@ public class ZerexBlueFarApril extends LinearOpMode {
 
         double speed = 0.75;
 
-        LeftShooter.setVelocityPIDFCoefficients(1.2, 0.0, 0.0, 11.7);
+        LeftShooter.setVelocityPIDFCoefficients(0.005, 0.0, 0.0, 11.7);
 
         waitForStart();
 
+        drive(950,950,950,950, 0.7);
 
-        drive(950,950,950,950, 0.5);
-
-        shoot(2550 ,3000);
-        drive(-250,250,-250,250, 0.7);
-        drive(-630, 630,630,-630  , 0.7);
+        shoot(2400 ,3000);
+        drive(230,-230,230,-230, 0.7);
+        drive(575,-575,-575,575 , 0.7);
         Intake.setPower(0.78);
-        drive(-799,-799,-799,-799, 0.25);
-        drive(111,111,111,111,0.25); // little back
-        sleep(250);
+        drive(-1178,-1178,-1178,-1178, 0.25);
+        drive(300,300,300,300,0.15);
+        sleep(200);
         Intake.setPower(0);
-        drive(888,888,888,888, 0.7);
-        drive(408,-408,-408,408, 0.7);
+        drive(800,800,800,800, 0.7);
+        drive(-650,650,650,-650, 0.7);
+        drive(-270,270,-270,270, 0.7);
+        //drive(-369,-369,-369,-369, 0.7);
 
-        drive(225,-225,225,-225, 0.7);
-        drive(-300,-300,-300,-300 , 0.7);
+        shoot(2450,3000);
 
-        shoot(2450 ,3000);
-
-        drive(-233,233,-233,233  , 0.7);
-        drive(-948,948,948,-948,1.0);
-
-
-
+        drive(0,-1200,-1200,0 , 0.7);
+        drive(0,-750,0,-750,0.7);
 
 
     }
@@ -117,7 +112,8 @@ public class ZerexBlueFarApril extends LinearOpMode {
         BackRight.setPower(speed);
         BackLeft.setPower(speed);
 
-        double timeout = getRuntime() + 2.5 ;
+        double timeout = getRuntime() + 2.5;
+
         while (opModeIsActive() && (FrontRight.isBusy() || FrontLeft.isBusy() || BackRight.isBusy() || BackLeft.isBusy()) && getRuntime() < timeout) {
             aprilTagTest.update();
             idle();
@@ -156,6 +152,7 @@ public class ZerexBlueFarApril extends LinearOpMode {
         telemetry.addData("Actual Velocity", LeftShooter.getVelocity());
         telemetry.update();
     }
+
     public void continuousAlignToTag(int targetId, double targetBearing, double tolerance, double maxDuration) {
         FrontRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         FrontLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
@@ -176,7 +173,6 @@ public class ZerexBlueFarApril extends LinearOpMode {
                 FrontLeft.setPower(0);
                 BackRight.setPower(0);
                 BackLeft.setPower(0);
-
                 consecutiveAlignedCount = 0;
 
                 telemetry.addData("Status", "Searching for tag...");
@@ -190,7 +186,6 @@ public class ZerexBlueFarApril extends LinearOpMode {
 
             if (Math.abs(error) <= tolerance) {
                 consecutiveAlignedCount++;
-
                 if (consecutiveAlignedCount >= REQUIRED_ALIGNED_READINGS) {
                     aligned = true;
                     FrontRight.setPower(0);
@@ -219,11 +214,9 @@ public class ZerexBlueFarApril extends LinearOpMode {
                     turnPower = 0;
                 } else {
                     turnPower = error * 0.05;
-
                     if (Math.abs(turnPower) < 0.15 && Math.abs(turnPower) > 0) {
                         turnPower = Math.signum(turnPower) * 0.15;
                     }
-
                     turnPower = Math.max(-0.6, Math.min(0.6, turnPower));
                 }
 
@@ -247,21 +240,12 @@ public class ZerexBlueFarApril extends LinearOpMode {
         BackRight.setPower(0);
         BackLeft.setPower(0);
 
-        FrontRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        FrontLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        BackRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        BackLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-
-        FrontRightPosition = 0;
-        FrontLeftPosition = 0;
-        BackRightPosition = 0;
-        BackLeftPosition = 0;
-
         if (!aligned) {
             telemetry.addData("Warning", "Alignment timeout - not fully aligned");
             telemetry.update();
         }
     }
+
     public void alignToTag(int targetId, double targetBearing, double tolerance) {
         aprilTagTest.update();
         AprilTagDetection detectedTag = aprilTagTest.getTagBySpecificId(targetId);
@@ -285,7 +269,6 @@ public class ZerexBlueFarApril extends LinearOpMode {
 
             currentBearing = detectedTag.ftcPose.bearing;
             double error = targetBearing - currentBearing;
-
             double turnPower = Math.max(-0.3, Math.min(0.3, error * 0.02));
 
             FrontRight.setPower(-turnPower);
@@ -304,6 +287,7 @@ public class ZerexBlueFarApril extends LinearOpMode {
         BackRight.setPower(0);
         BackLeft.setPower(0);
     }
+
     public void autoAlignRange(int targetId, double targetRange, double tolerance) {
         aprilTagTest.update();
         AprilTagDetection detectedTag = aprilTagTest.getTagBySpecificId(targetId);
@@ -358,5 +342,4 @@ public class ZerexBlueFarApril extends LinearOpMode {
             telemetry.addData("Drive Power", "%.2f", drivePower);
         }
     }
-
 }

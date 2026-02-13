@@ -105,7 +105,7 @@ public class ZerexTele2Blue extends LinearOpMode {
             RightShooter.setPower(LeftShooter.getPower());
 
             if(gamepad2.right_trigger > 0){
-                Kicker.setPower(-1);
+                Kicker.setPower(-0.85);
             } else {
                 Kicker.setPower(0);
             }
@@ -129,7 +129,7 @@ public class ZerexTele2Blue extends LinearOpMode {
                 shootSpeed = 1.0;
             }
             else {
-                shootSpeed = 0.80;
+                shootSpeed = 0.75;
 
             }
 
@@ -142,8 +142,8 @@ public class ZerexTele2Blue extends LinearOpMode {
             }
 
             if (gamepad2.x){
-                Kicker.setPower(-1);
-                sleep(85);
+                Kicker.setPower(-.83);
+                sleep(60);
                 Kicker.setPower(0);
                 sleep(500);
             }

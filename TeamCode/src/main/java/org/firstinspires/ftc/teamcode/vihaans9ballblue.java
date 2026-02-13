@@ -68,19 +68,22 @@ public class vihaans9ballblue extends LinearOpMode {
 
         waitForStart();
 
+
         drive(1000,1000,1000,1000, 1);
 
-        shoot(2200 ,3000);
+        shoot(2400 ,3000);
         drive(-230,230,-230,230, 1);
-        drive(-800, 800,800,-800  , 1);
+        drive(-600, 600,600,-600  , 1);
         Intake.setPower(0.78);
-        drive(-1300,-1300,-1300,-1300, 0.3);
+        drive(-999,-999,-999,-999, 0.7);
+        drive(111,111,111,111,0.7); // little back
+        sleep(500);
+        Intake.setPower(0);
+        drive(888,888,888,888, 1);
+        drive(388,-388,-388,388, 1);
 
-        drive(597,597,597,597, 1);
-        drive(405,-405,-405,405, 0.7);
-
-        drive(300,-300,300,-300, 1);
-
+        drive(222,-222,222,-222, 1);
+        drive(-300,-300,-300,-300 , 1);
         shoot(2100 ,3000);
 
         drive(-375,375,-375,375  , 1);

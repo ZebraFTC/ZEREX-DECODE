@@ -9,7 +9,7 @@ import com.qualcomm.robotcore.hardware.VoltageSensor;
 import org.firstinspires.ftc.vision.apriltag.AprilTagDetection;
 
 @Autonomous
-public class ZerexBlueFarApril extends LinearOpMode {
+public class BlueFarEndGate extends LinearOpMode {
     AprilTagTest aprilTagTest = new AprilTagTest();
     public DcMotorEx FrontRight;
     public DcMotorEx FrontLeft;
@@ -87,8 +87,8 @@ public class ZerexBlueFarApril extends LinearOpMode {
 
         shoot(2450 ,3000);
 
-        drive(-233,233,-233,233  , 0.7);
-        drive(-948,948,948,-948,1.0);
+        drive(-1415,0,0,-1415  , 0.7);
+        drive(-750,-0,-750,0,0.7);
 
 
 
